@@ -11,4 +11,7 @@ app.use(bodyParser.json());
 app.get('/', async (req, res) => {
     res.end(`Hello UserName`);
 });
+app.get('/hello', async (req, res) => {
+    res.end(`Hello UserName`);
+});
 http.createServer(app).listen(80);
