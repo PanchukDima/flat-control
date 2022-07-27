@@ -8,10 +8,10 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/', async (req, res) => {
+app.get('/api/auth/', async (req, res) => {
     res.end(`Hello UserName`);
 });
-app.get('/hello', async (req, res) => {
+app.get('/api/token/', async (req, res) => {
     res.end(`Hello UserName`);
 });
 http.createServer(app).listen(PORT, err => {
