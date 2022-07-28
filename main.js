@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const mongoClient = new MongoClient(ENV['mongo_str']);
+const mongoClient = new MongoClient(process.env.mongo_str);
 console.log(process.env.mongo_str);
 mongoClient.connect(function(err, client){
 
