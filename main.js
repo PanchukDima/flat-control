@@ -21,7 +21,13 @@ mongoClient.connect(function(err, client){
     // взаимодействие с базой данных
     const db = client.db(process.env.db_name);
     const collection = db.collection("User");
+    collection.countDocuments(function(err, result){
+
+        if(err){
+            return console.log(err);
+        }
     console.log(`Registry users count ${result} `);
+    });
     client.close();
 });
 
