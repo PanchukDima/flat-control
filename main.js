@@ -40,6 +40,15 @@ app.post('/api/auth/', async (req, res) =>{
     res.end('Post OAuth');
 });
 
+app.post('/api/registry', async(req, res) =>
+{
+
+});
+app.get('/api/registry', async(req, res) =>
+{
+    res.redirect(200, '/static/registry.html');
+});
+
 app.get('/api/token/', async (req, res) => {
     res.end(`token`);
 });
