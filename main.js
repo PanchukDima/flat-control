@@ -10,6 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const mongoClient = new MongoClient(ENV['mongo_str']);
+console.log(ENV['mongo_str']);
 mongoClient.connect(function(err, client){
 
     if(err){
