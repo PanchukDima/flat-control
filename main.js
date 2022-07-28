@@ -10,13 +10,18 @@ const app = express();
 app.use(bodyParser.json());
 
 const mongoClient = new MongoClient(process.env.mongo_str);
-console.log(process.env.mongo_str);
+
+
+
 mongoClient.connect(function(err, client){
 
     if(err){
         return console.log(err);
     }
     // взаимодействие с базой данных
+    const db = client.db(process.env.db_name);
+    const collection = db.collection("User");
+    console.log(`Registry users count ${result} `);
     client.close();
 });
 
