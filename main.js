@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use('/static', express.static('public'));
 
 const mongoClient = new MongoClient(process.env.mongo_str);
 
