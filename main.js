@@ -19,7 +19,7 @@ mongoClient.connect(function(err, client){
         return console.log(err);
     }
     // взаимодействие с базой данных
-    const db = client.db(process.env.db_name);
+    const db = client.db("flat-control_dev");
     const collection = db.collection("User");
     collection.countDocuments(function(err, result){
 
