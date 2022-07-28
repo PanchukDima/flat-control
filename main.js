@@ -33,7 +33,7 @@ mongoClient.connect(function(err, client){
 });
 
 app.get('/api/auth/', async (req, res) => {
-    res.render('Pages/login.html');
+    res.redirect(302, 'index.html');
 });
 
 app.post('/api/auth/', async (req, res) =>{
