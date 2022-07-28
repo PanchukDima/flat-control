@@ -28,7 +28,7 @@ mongoClient.connect(function(err, client){
         }
     console.log(`Registry users count ${result} `);
     });
-    client.close();
+
 });
 
 app.get('/api/auth/', async (req, res) => {
