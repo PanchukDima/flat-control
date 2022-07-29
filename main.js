@@ -34,7 +34,7 @@ mongoClient.connect(function(err, client){
 
 app.get('/api/auth/', async (req, res) => {
     console.log(req.query);
-    res.redirect(302, '/static/login.html?'+ JSON.stringify(req.query));
+    res.redirect(302, '/static/login.html?state='+req.query.state);
 });
 
 app.post('/api/auth/', async (req, res) =>{
