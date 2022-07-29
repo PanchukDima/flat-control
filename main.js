@@ -33,6 +33,7 @@ mongoClient.connect(function(err, client){
 });
 
 app.get('/api/auth/', async (req, res) => {
+    console.log(req);
     res.redirect(302, '/static/login.html');
 });
 
