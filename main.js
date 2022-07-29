@@ -45,7 +45,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         return res.sendStatus(400);
     }
     console.log(req.body);
-
+    console.log(req.query);
     res.end("Good bye");
 });
 
