@@ -56,7 +56,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         let userData = collection.findOne(req.body);
         if(userData.username = req.body.username)
         {
-            let tmp_key = uuidV4().toString();
+            let tmp_key = uuid.v4().toString();
             console.log("randomkey:"+ tmp_key);
             params = {
                 state: req.query.state,
