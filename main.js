@@ -39,7 +39,7 @@ app.get('/api/auth/', async (req, res) => {
 });
 
 app.post('/static/login.html' , async (req, res) =>{
-    console.log(req.query);
+    console.log(req);
     res.end("Good bye");
 });
 
