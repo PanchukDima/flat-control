@@ -22,7 +22,7 @@ mongoClient.connect(function(err, client){
         return console.log(err);
     }
     // взаимодействие с базой данных
-    const db = client.db("flat-control_dev");
+    const db = client.db("flat-control-dev");
     const collection = db.collection("Clients");
     collection.countDocuments(function(err, result){
 
@@ -50,7 +50,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
             return console.log(err);
         }
         // взаимодействие с базой данных
-        const db = client.db("flat-control_dev");
+        const db = client.db("flat-control-dev");
         const collection = db.collection("Clients");
         collection.find({username: 'panch-dima'}).toArray(function(err, results){
 
