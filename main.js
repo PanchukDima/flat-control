@@ -38,19 +38,11 @@ app.get('/api/auth/', async (req, res) => {
     res.redirect(302, '/static/login.html?state='+req.query.state+'&redirect_uri='+req.query.redirect_uri+'&response_type='+req.query.response_type+'&client_id='+req.query.client_id);
 });
 
-app.post('/static/login.html' , function (req, res) =>{
-    if(!req.body) return res.sendStatus(400);
+app.post('/static/login.html' ,(req, res) =>{
+        if(!req.body) {
+        return res.sendStatus(400);
+    }
     console.log(request.body);
-    mongoClient.connect(function(err, client) {
-
-        if (err) {
-            return console.log(err);
-        }
-        // взаимодействие с базой данных
-        const db = client.db("flat-control_dev");
-        const collection = db.collection("Clients");
-        console.log(collection.findOne("{username:"+req.params.username+"}"));
-    });
 
     res.end("Good bye");
 });
