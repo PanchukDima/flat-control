@@ -44,6 +44,17 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         if(!req.body) {
         return res.sendStatus(400);
     }
+    mongoClient.connect(function(err, client) {
+
+        if (err) {
+            return console.log(err);
+        }
+        // взаимодействие с базой данных
+        const db = client.db("flat-control_dev");
+        const collection = db.collection("Clients");
+        let record = collection.findOne({username:req.body.username});
+        console.log(record);
+    });
     console.log(req.body);
     console.log(req.query);
     res.end("Good bye");
