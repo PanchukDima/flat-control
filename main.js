@@ -40,7 +40,7 @@ app.get('/api/auth/', async (req, res) => {
 
 app.post('/static/login.html' , async (req, res) =>{
     console.log(req.query);
-    console.log(req.params);
+    console.log(req);
     mongoClient.connect(function(err, client) {
 
         if (err) {
