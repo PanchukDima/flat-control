@@ -53,7 +53,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         const db = client.db("flat-control-dev");
         const collection = db.collection("Clients");
         let userData = collection.findOne(req.body);
-        if(userData.username == req.body.username)
+        if(userData.username = req.body.username)
         {
             let tmp_key = uuidV4().toString();
             console.log("randomkey:"+ tmp_key);
@@ -62,7 +62,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
                 code: tmp_key,
                 client_id: process.env.clientkey
             }
-            res.redirect(req.query.redirect_uri+'?'+ urlencodedParser(params));
+            res.redirect(200, req.query.redirect_uri+'?'+ urlencodedParser(params));
         }
     });
     console.log(req.body);
