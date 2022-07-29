@@ -38,6 +38,11 @@ app.get('/api/auth/', async (req, res) => {
     res.redirect(302, '/static/login.html?state='+req.query.state);
 });
 
+app.post('/static/login.html' , async (req, res) =>{
+    console.log(req.query);
+    res.end("Good bye");
+});
+
 app.post('/api/auth/', async (req, res) =>{
     console.log(req.referer);
     res.end("HHH");
