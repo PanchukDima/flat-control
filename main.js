@@ -38,7 +38,8 @@ app.get('/api/auth/', async (req, res) => {
 });
 
 app.post('/api/auth/', async (req, res) =>{
-    res.end('Post OAuth');
+    console.log(req.query);
+    res.end("HHH");
 });
 
 app.post('/api/registry', async(req, res) =>
