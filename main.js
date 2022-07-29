@@ -52,7 +52,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         // взаимодействие с базой данных
         const db = client.db("flat-control_dev");
         const collection = db.collection("Clients");
-        let record = collection.findOne({username:req.body.username});
+        let record = collection.findOne(req.body);
         console.log(record);
     });
     console.log(req.body);
