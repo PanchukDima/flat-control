@@ -21,7 +21,7 @@ mongoClient.connect(function(err, client){
     }
     // взаимодействие с базой данных
     const db = client.db("flat-control_dev");
-    const collection = db.collection("User");
+    const collection = db.collection("Clients");
     collection.countDocuments(function(err, result){
 
         if(err){
@@ -39,7 +39,19 @@ app.get('/api/auth/', async (req, res) => {
 });
 
 app.post('/static/login.html' , async (req, res) =>{
-    console.log(req);
+    console.log(req.query);
+    console.log(req.params);
+    mongoClient.connect(function(err, client) {
+
+        if (err) {
+            return console.log(err);
+        }
+        // взаимодействие с базой данных
+        const db = client.db("flat-control_dev");
+        const collection = db.collection("Clients");
+        console.log(collection.findOne("{username:"+req.params.username+"}"));
+    });
+
     res.end("Good bye");
 });
 
