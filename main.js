@@ -9,9 +9,14 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use('/static', express.static('public'));
-
-const mongoClient = new MongoClient(process.env.mongo_str);
-
+if (process.env.mongo_str != null)
+{
+    const mongoClient = new MongoClient(process.env.mongo_str);
+}
+else
+{
+    const mongoClient = new MongoClient("mongodb://");
+}
 // создаем парсер для данных application/x-www-form-urlencoded
 const urlencodedParser = express.urlencoded({extended: false});
 
@@ -52,7 +57,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         // взаимодействие с базой данных
         const db = client.db("flat-control_dev");
         const collection = db.collection("Clients");
-        let record = collection.findOne({username: "panch-dima"});
+        let record = collection.findOne({username: 'panch-dima'});
         console.log(record);
         console.log(record.password);
     });
