@@ -12,6 +12,8 @@ app.use('/static', express.static('public'));
 
 const mongoClient = new MongoClient(process.env.mongo_str);
 
+// создаем парсер для данных application/x-www-form-urlencoded
+const urlencodedParser = express.urlencoded({extended: false});
 
 
 mongoClient.connect(function(err, client){
@@ -38,7 +40,7 @@ app.get('/api/auth/', async (req, res) => {
     res.redirect(302, '/static/login.html?state='+req.query.state+'&redirect_uri='+req.query.redirect_uri+'&response_type='+req.query.response_type+'&client_id='+req.query.client_id);
 });
 
-app.post('/static/login.html' ,(req, res) =>{
+app.post('/static/login.html', urlencodedParser,function (req, res) {
         if(!req.body) {
         return res.sendStatus(400);
     }
