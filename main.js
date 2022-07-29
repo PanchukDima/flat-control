@@ -38,7 +38,7 @@ app.get('/api/auth/', async (req, res) => {
 });
 
 app.post('/api/auth/', async (req, res) =>{
-    console.log(req);
+    console.log(req.referer);
     res.end("HHH");
 });
 
