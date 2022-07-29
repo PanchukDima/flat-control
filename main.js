@@ -52,11 +52,18 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         // взаимодействие с базой данных
         const db = client.db("flat-control-dev");
         const collection = db.collection("Clients");
-        collection.find({username: 'panch-dima'}).toArray(function(err, results){
-
-            console.log(results);
-            client.close();
-        });
+        let userData = collection.findOne(req.body);
+        if(userData.username == req.body.username)
+        {
+            let tmp_key = uuidV4().toString();
+            console.log("randomkey:"+ tmp_key);
+            params = {
+                state: req.query.state,
+                code: tmp_key,
+                client_id: process.env.clientkey
+            }
+            res.redirect(req.query.redirect_uri+'?'+ urlencodedParser(params));
+        }
     });
     console.log(req.body);
     console.log(req.query);
