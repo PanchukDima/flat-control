@@ -42,7 +42,7 @@ app.post('/static/login.html' ,(req, res) =>{
         if(!req.body) {
         return res.sendStatus(400);
     }
-    console.log(request.body);
+    console.log(req.body);
 
     res.end("Good bye");
 });
