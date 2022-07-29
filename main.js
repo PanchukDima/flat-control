@@ -38,9 +38,9 @@ app.get('/api/auth/', async (req, res) => {
     res.redirect(302, '/static/login.html?state='+req.query.state+'&redirect_uri='+req.query.redirect_uri+'&response_type='+req.query.response_type+'&client_id='+req.query.client_id);
 });
 
-app.post('/static/login.html' , (req, res) =>{
-    console.log(req.query);
-    console.log(req.body);
+app.post('/static/login.html' , function (req, res) =>{
+    if(!req.body) return res.sendStatus(400);
+    console.log(request.body);
     mongoClient.connect(function(err, client) {
 
         if (err) {
