@@ -9,14 +9,9 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use('/static', express.static('public'));
-if (process.env.mongo_str != null)
-{
-    const mongoClient = new MongoClient(process.env.mongo_str);
-}
-else
-{
-    const mongoClient = new MongoClient("mongodb://");
-}
+const mongoClient = new MongoClient(process.env.mongo_str);
+//   const mongoClient = new MongoClient("mongodb://");
+
 // создаем парсер для данных application/x-www-form-urlencoded
 const urlencodedParser = express.urlencoded({extended: false});
 
