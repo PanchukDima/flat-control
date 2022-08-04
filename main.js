@@ -63,7 +63,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
                 code: tmp_key,
                 client_id: process.env.clientkey
             }
-            console.log(req.query.redirect_uri+'?'+ JSON.parse(params).explanation);
+            //console.log(req.query.redirect_uri+'?'+ JSON.parse(params).explanation);
             res.redirect(req.query.redirect_uri+'?state='+params.state+'&code='+params.code+'&client_id'+params.client_id);
         }
     });
