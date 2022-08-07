@@ -82,7 +82,7 @@ app.get('/api/registry', async(req, res) =>
     res.redirect(200, '/static/registry.html');
 });
 
-app.get('/api/token/', async (req, res) => {
+app.get('/api/token', async (req, res) => {
     console.log(req.body());
     res.end(`token`);
 });
