@@ -35,7 +35,7 @@ mongoClient.connect(function(err, client){
 
 });
 
-app.get('/api/auth/', async (req, res) => {
+app.get('/api/auth/', (req, res) => {
     res.redirect(302, '/static/login.html?state='+req.query.state+'&redirect_uri='+req.query.redirect_uri+'&response_type='+req.query.response_type+'&client_id='+req.query.client_id);
 });
 
@@ -70,17 +70,17 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
     res.end("Good bye");
 });
 
-app.post('/api/auth/', async (req, res) =>{
+app.post('/api/auth/', (req, res) =>{
     console.log(req);
     res.end("HHH");
 });
 
-app.post('/api/registry', async (req, res) =>{
+app.post('/api/registry',  (req, res) =>{
     console.log(req);
     res.end("/api/registry")
 });
 
-app.get('/api/registry', async(req, res) =>
+app.get('/api/registry', (req, res) =>
 {
     res.redirect(200, '/static/registry.html');
 });
@@ -92,23 +92,23 @@ app.post('/api/token/', (req, res) => {
     res.end(JSON.stringify({'access_token': tmp_key}));
 });
 
-app.get('/api/v1.0/', async (req, res) => {
+app.get('/api/v1.0/',  (req, res) => {
     res.end('end point');
 });
 
-app.post('/api/v1.0/user/unlink/', async (req, res) => {
+app.post('/api/v1.0/user/unlink/',  (req, res) => {
     res.end('account unlink');
 });
 
-app.get('/api/v1.0/user/devices/', async (req, res) => {
+app.get('/api/v1.0/user/devices/',  (req, res) => {
     res.end('get devices list user');
 });
 
-app.post('/api/v1.0/user/devices/query', async (req, res) => {
+app.post('/api/v1.0/user/devices/query', (req, res) => {
     res.end('check state devices');
 });
 
-app.post('/api/v1.0/user/devices/action', async (req, res) => {
+app.post('/api/v1.0/user/devices/action', (req, res) => {
     res.end('change state devices');
 });
 
