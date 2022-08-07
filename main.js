@@ -59,7 +59,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
             params = {
                 state: req.query.state,
                 code: tmp_key,
-                client_id: process.env.clientkey
+                client_id: process.env.clientkey,
             };
             res.redirect(302, req.query.redirect_uri+'?state='+params.state+'&code='+params.code+'&client_id'+params.client_id);
         }
@@ -68,7 +68,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
 });
 
 app.post('/api/auth/', async (req, res) =>{
-    console.log(req.referer);
+    console.log(req);
     res.end("HHH");
 });
 
@@ -82,7 +82,8 @@ app.get('/api/registry', async(req, res) =>
 });
 
 app.get('/api/token', async (req, res) => {
-    console.log(req);
+    console.log("/api/token - request");
+    //console.log(req);
     res.end(`token`);
 });
 
