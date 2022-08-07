@@ -83,7 +83,7 @@ app.get('/api/registry', async(req, res) =>
 });
 
 app.get('/api/token/', async (req, res) => {
-    console.log(req);
+    console.log(req.body());
     res.end(`token`);
 });
 
