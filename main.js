@@ -79,6 +79,7 @@ app.post('/api/registry', async (req, res) =>{
     console.log(req);
     res.end("/api/registry")
 });
+
 app.get('/api/registry', async(req, res) =>
 {
     res.redirect(200, '/static/registry.html');
