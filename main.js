@@ -85,7 +85,7 @@ app.get('/api/registry', async(req, res) =>
     res.redirect(200, '/static/registry.html');
 });
 
-app.post('/api/token/', async (req, res) => {
+app.post('/api/token/', (req, res) => {
     console.log("/api/token - request");
     console.log(req);
     res.end(`token`);
