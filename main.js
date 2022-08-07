@@ -61,8 +61,8 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
                 code: tmp_key,
                 client_id: process.env.clientkey,
             };*/
-            console.log({'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id'+process.env.clientkey)});
-            res.writeHead(302, {'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id'+process.env.clientkey)});
+            console.log({'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)});
+            res.writeHead(302, {'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)});
             res.end();
 
         }
