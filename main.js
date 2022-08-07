@@ -83,7 +83,7 @@ app.get('/api/registry', async(req, res) =>
 
 app.post('/api/token/', async (req, res) => {
     console.log("/api/token - request");
-    console.log(req.body);
+    //console.log(req.body);
     res.end(`token`);
 });
 
