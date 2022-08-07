@@ -61,8 +61,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
                 code: tmp_key,
                 client_id: process.env.clientkey,
             };*/
-
-            res.redirect(200,req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id'+process.env.clientkey));
+            res.redirect(req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id'+process.env.clientkey));
         }
     });
     res.end("Good bye");
