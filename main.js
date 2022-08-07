@@ -36,8 +36,6 @@ mongoClient.connect(function(err, client){
 });
 
 app.get('/api/auth/', async (req, res) => {
-    console.log(req.query);
-
     res.redirect(302, '/static/login.html?state='+req.query.state+'&redirect_uri='+req.query.redirect_uri+'&response_type='+req.query.response_type+'&client_id='+req.query.client_id);
 });
 
@@ -57,7 +55,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         if(userData.username = req.body.username)
         {
             let tmp_key = uuid.v4().toString();
-            console.log("randomkey:"+ tmp_key);
+            console.log("random_key:"+ tmp_key);
             params = {
                 state: req.query.state,
                 code: tmp_key,
@@ -67,8 +65,6 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
             res.redirect(req.query.redirect_uri+'?state='+params.state+'&code='+params.code+'&client_id'+params.client_id);
         }
     });
-    console.log(req.body);
-    console.log(req.query);
     res.end("Good bye");
 });
 
@@ -87,7 +83,7 @@ app.get('/api/registry', async(req, res) =>
 });
 
 app.get('/api/token/', async (req, res) => {
-    console.log(res.body());
+    console.log(res);
     res.end(`token`);
 });
 
@@ -96,7 +92,7 @@ app.get('/api/v1.0/', async (req, res) => {
 });
 
 app.post('/api/v1.0/user/unlink/', async (req, res) => {
-    res.end('aaccount unlink');
+    res.end('account unlink');
 });
 
 app.get('/api/v1.0/user/devices/', async (req, res) => {
