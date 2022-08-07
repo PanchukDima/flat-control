@@ -87,8 +87,9 @@ app.get('/api/registry', async(req, res) =>
 
 app.post('/api/token/', (req, res) => {
     console.log("/api/token - request");
-    console.log(req);
-    res.end(`token`);
+    let tmp_key = uuid.v4().toString();
+    console.log(req.body.client_id);
+    res.end(JSON.stringify({'access_token': tmp_key}));
 });
 
 app.get('/api/v1.0/', async (req, res) => {
