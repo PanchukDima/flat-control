@@ -122,6 +122,8 @@ app.post('/v1.0/user/unlink/',  (req, res) => {
 
 app.get('/v1.0/user/devices',urlencodedParser,  (req, res) => {
     console.log(req.body);
+    console.log(req.params);
+    console.log(req);
     res.end('get devices list user');
 });
 
