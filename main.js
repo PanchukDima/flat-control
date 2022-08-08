@@ -120,9 +120,8 @@ app.post('/v1.0/user/unlink',  (req, res) => {
     res.end('account unlink');
 });
 
-app.get('/v1.0/user/devices',urlencodedParser,  (req, res) => {
+app.get('/v1.0/user/devices',urlencodedParser ,(req, res) => {
     mongoClient.connect(function(err, client) {
-
         if (err) {
             return console.log(err);
         }
@@ -132,10 +131,8 @@ app.get('/v1.0/user/devices',urlencodedParser,  (req, res) => {
         let authorization = req.headers.authorization;
         let TokenArray = authorization.split(" ");
         let userData = Client.findOne({oauth:{key:TokenArray[1]}});
-        console.log(userData);
+        console.log(JSON.stringify(userData));
     });
-
-
     res.end('get devices list user');
 });
 
