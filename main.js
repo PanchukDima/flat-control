@@ -132,7 +132,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         let TokenArray = authorization.split(" ");
         console.log(TokenArray[1]);
         let responseBody = {
-            request_id: req.headers.x-request-id,
+            request_id: req.headers['x-request-id'],
             payload:{
 
             }
