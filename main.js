@@ -67,7 +67,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
 
         }
     });
-    res.end("Good bye");
+    //res.end("Good bye");
 });
 
 app.post('/api/auth/', (req, res) =>{
