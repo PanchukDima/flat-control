@@ -133,7 +133,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         console.log(TokenArray[1]);
         var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         console.log(devices);
-        res.end(devices);
+        res.end(devices.projection);
     });
 
 });
