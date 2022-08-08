@@ -50,17 +50,14 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         }
         // взаимодействие с базой данных
         const db = client.db("flat-control-dev");
-        const collection = db.collection("Clients");
-        let userData = collection.findOne(req.body);
+        const Client = db.collection("Clients");
+
+        let userData = Client.findOne(req.body);
         if(userData.username = req.body.username)
         {
             let tmp_key = uuid.v4().toString();
+            let userData = Client.findOneAndUpdate(req.body,{$set:{lcode:tmpkey}});
             console.log("random_key:"+ tmp_key);
-            /*params = {
-                state: req.query.state,
-                code: tmp_key,
-                client_id: process.env.clientkey,
-            };*/
             console.log({'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)});
             res.writeHead(302, {'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)});
             res.end();
@@ -89,7 +86,7 @@ app.get('/api/registry', (req, res) =>
 app.post('/api/token/', (req, res) => {
     console.log("/api/token - request");
     let tmp_key = uuid.v4().toString();
-    console.log(req.query);
+    console.log(req.params);
     res.end(JSON.stringify({'access_token': tmp_key}));
 });
 
