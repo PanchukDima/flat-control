@@ -149,6 +149,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
             responseBody.payload.user_id = result[0].username;
             responseBody.payload.devices = result[0].devices;
             console.log(JSON.stringify(responseBody));
+            res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(responseBody));
         });
 
