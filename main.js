@@ -150,7 +150,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
             responseBody.payload.devices = result[0].devices;
             console.log(JSON.stringify(responseBody));
             res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(responseBody));
+            res.end(JSON.stringify(responseBody, null, 3));
         });
 
     });
