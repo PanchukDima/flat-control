@@ -131,10 +131,17 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         let authorization = req.headers.authorization;
         let TokenArray = authorization.split(" ");
         console.log(TokenArray[1]);
+        let responseBody = {
+            request_id: req.headers.x-request-id,
+            payload:{
+
+            }
+        };
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.find({oauth:{key:TokenArray[1]}}, {
             projection:
                 {
+                    username:1 ,
                     gateway:
                         {
                             devices:1
@@ -144,9 +151,11 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
             if (err) {
                 throw err
             }
-
+            console.log(result);
+            responseBody.payload.user_id = result[0].username;
+            responseBody.payload.devices = result[0].gateway;
             console.log(JSON.stringify(result[0].gateway));
-            res.end(result);
+            res.end(JSON.stringify(responseBody));
         });
 
     });
