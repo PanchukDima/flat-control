@@ -82,6 +82,7 @@ app.post('/api/registry',  (req, res) =>{
 
 app.get('/api/registry', (req, res) =>
 {
+    console.log(req);
     res.redirect(200, '/static/registry.html');
 });
 
@@ -93,22 +94,27 @@ app.post('/api/token/', (req, res) => {
 });
 
 app.get('/api/v1.0/',  (req, res) => {
+    console.log(req);
     res.end('end point');
 });
 
 app.post('/api/v1.0/user/unlink/',  (req, res) => {
+    console.log(req);
     res.end('account unlink');
 });
 
 app.get('/api/v1.0/user/devices/',  (req, res) => {
+    console.log(req);
     res.end('get devices list user');
 });
 
 app.post('/api/v1.0/user/devices/query', (req, res) => {
+    console.log(req);
     res.end('check state devices');
 });
 
 app.post('/api/v1.0/user/devices/action', (req, res) => {
+    console.log(req);
     res.end('change state devices');
 });
 
