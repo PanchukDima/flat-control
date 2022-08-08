@@ -140,14 +140,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.find({oauth:{key:TokenArray[1]}}, {
             projection:
-                {
-                    username:1 ,
-                    gateway:
-                        {
-                            devices:1
-                        },
-                    ports:0
-                }
+                {username:1 , _id:0, devices:1}
         }).toArray(function (err, result) {
             if (err) {
                 throw err
