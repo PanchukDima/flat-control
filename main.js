@@ -120,7 +120,7 @@ app.post('/v1.0/user/unlink',  (req, res) => {
     res.end('account unlink');
 });
 
-app.get('/v1.0/user/devices',urlencodedParser ,(req, res) => {
+app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
     mongoClient.connect(function(err, client) {
         if (err) {
             return console.log(err);
@@ -130,6 +130,7 @@ app.get('/v1.0/user/devices',urlencodedParser ,(req, res) => {
         const Client = db.collection("Clients");
         let authorization = req.headers.authorization;
         let TokenArray = authorization.split(" ");
+        console.log(TokenArray[1]);
         let userData = Client.findOne({oauth:{key:TokenArray[1]}});
         console.log(JSON.stringify(userData));
     });
