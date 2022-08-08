@@ -56,7 +56,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         if(userData.username = req.body.username)
         {
             let tmp_key = uuid.v4().toString();
-            let userData = Client.findOneAndUpdate(req.body,{$set:{lcode:tmpkey}});
+            let userData = Client.findOneAndUpdate(req.body,{$set:{lcode:tmp_key}});
             console.log("random_key:"+ tmp_key);
             console.log({'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)});
             res.writeHead(302, {'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)});
