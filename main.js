@@ -85,7 +85,7 @@ app.get('/api/registry', (req, res) =>
     res.redirect(200, '/static/registry.html');
 });
 
-app.post('/api/token/', (req, res) => {
+app.post('/api/token/',urlencodedParser, (req, res) => {
     if(!req.body) {
         return res.sendStatus(400);
     }
