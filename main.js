@@ -58,6 +58,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
             let tmp_key = 1234;//uuid.v4().toString();
             Client.findOneAndUpdate(req.body,{$set:{oauth:{lcode:tmp_key}}},function(err, result){
                 console.log("random_key:"+ tmp_key);
+                console.log(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
                 res.redirect(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
                 res.end();
             });
