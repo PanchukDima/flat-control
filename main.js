@@ -86,6 +86,9 @@ app.get('/api/registry', (req, res) =>
 });
 
 app.post('/api/token/', (req, res) => {
+    if(!req.body) {
+        return res.sendStatus(400);
+    }
     console.log("/api/token - request");
     console.log(JSON.stringify(req.headers));
     console.log(req);
