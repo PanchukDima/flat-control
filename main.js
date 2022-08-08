@@ -89,7 +89,7 @@ app.get('/api/registry', (req, res) =>
 app.post('/api/token/', (req, res) => {
     console.log("/api/token - request");
     let tmp_key = uuid.v4().toString();
-    console.log(req);
+    console.log(req.params);
     res.end(JSON.stringify({'access_token': tmp_key}));
 });
 
@@ -104,7 +104,7 @@ app.post('/api/v1.0/user/unlink/',  (req, res) => {
 });
 
 app.get('/api/v1.0/user/devices/',  (req, res) => {
-    console.log(req);
+    console.log(req.body);
     res.end('get devices list user');
 });
 
