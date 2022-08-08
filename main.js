@@ -60,7 +60,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
                 console.log("random_key:"+ tmp_key);
                 console.log(result);
                 console.log({'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)});
-                res.writeHead(302, {'Location': req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)});
+                res.redirect(302, req.query.redirect_uri+encodeURI('?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey));
                 res.end();
             });
 
