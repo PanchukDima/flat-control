@@ -115,15 +115,27 @@ app.get('/v1.0/',  (req, res) => {
     res.end('end point');
 });
 
-app.post('/v1.0/user/unlink/',  (req, res) => {
+app.post('/v1.0/user/unlink',  (req, res) => {
     console.log(req);
     res.end('account unlink');
 });
 
 app.get('/v1.0/user/devices',urlencodedParser,  (req, res) => {
-    console.log(req.body);
-    console.log(req.params);
-    console.log(req.headers);
+    mongoClient.connect(function(err, client) {
+
+        if (err) {
+            return console.log(err);
+        }
+        // взаимодействие с базой данных
+        const db = client.db("flat-control-dev");
+        const Client = db.collection("Clients");
+        let authorization = req.headers.authorization;
+        let TokenArray = authorization.split(" ");
+        let userData = Client.findOne({oauth:{key:TokenArray[1]}});
+        console.log(userData);
+    });
+
+
     res.end('get devices list user');
 });
 
