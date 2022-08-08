@@ -131,7 +131,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         let authorization = req.headers.authorization;
         let TokenArray = authorization.split(" ");
         console.log(TokenArray[1]);
-        Client.findOne({oauth:{key:TokenArray[1]}},function(err,result)
+        Client.find({oauth:{key:TokenArray[1]}}, {gateway:{devices:1}}, function(err,result)
         {
             console.log(JSON.stringify(result));
             res.end('get devices list user');
