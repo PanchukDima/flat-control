@@ -144,7 +144,11 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
                     username:1 ,
                     gateway:
                         {
-                            devices:1
+                            devices:1,
+                            devices:{
+                                port: 0
+                            }
+
                         }
                 }
         }).toArray(function (err, result) {
