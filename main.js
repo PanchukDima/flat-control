@@ -55,7 +55,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         let userData = Client.findOne(req.body);
         if(userData.username = req.body.username)
         {
-            let tmp_key = 1234;//uuid.v4().toString();
+            let tmp_key = uuid.v4().toString();
             Client.findOneAndUpdate(req.body,{$set:{oauth:{lcode:tmp_key}}},function(err, result){
                 console.log("random_key:"+ tmp_key);
                 console.log(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
@@ -90,12 +90,24 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
         return res.sendStatus(400);
     }
     console.log("/api/token - request");
-    console.log(JSON.stringify(req.headers));
-    console.log(req);
-    console.log(req.body.code);
-    console.log(req.query);
-    let tmp_key = uuid.v4().toString();
-    res.end(JSON.stringify({'access_token': tmp_key}));
+    mongoClient.connect(function(err, client) {
+
+        if (err) {
+            return console.log(err);
+        }
+        // взаимодействие с базой данных
+        const db = client.db("flat-control-dev");
+        const Client = db.collection("Clients");
+
+        let tmp_key = uuid.v4().toString();
+        Client.findOneAndUpdate({oauth:{lcode:req.body.code}},{$set:{oauth:{key:tmp_key}}},function(err, result){
+            console.log("random_key:"+ tmp_key);
+            res.end(JSON.stringify({'access_token': tmp_key}));
+        });
+
+
+    });
+
 });
 
 app.get('/v1.0/',  (req, res) => {
