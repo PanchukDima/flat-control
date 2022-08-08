@@ -145,8 +145,8 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
                 throw err
             }
 
-            console.log(devices.projection);
-            res.end(devices.projection);
+            console.log(result);
+            res.end(result);
         });
 
     });
