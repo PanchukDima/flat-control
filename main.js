@@ -145,7 +145,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
                 throw err
             }
 
-            console.log(result);
+            console.log(JSON.stringify(result[0].gateway));
             res.end(result);
         });
 
