@@ -120,7 +120,7 @@ app.post('/v1.0/user/unlink/',  (req, res) => {
     res.end('account unlink');
 });
 
-app.get('/v1.0/user/devices/',urlencodedParser,  (req, res) => {
+app.get('/v1.0/user/devices',urlencodedParser,  (req, res) => {
     console.log(req.body);
     res.end('get devices list user');
 });
