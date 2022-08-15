@@ -1,4 +1,5 @@
 const express = require('express');
+const Net = require('net');
 const path = require('path');
 const bodyParser = require('body-parser');
 const request = require('request');
@@ -6,6 +7,7 @@ const http = require('http');
 var uuid = require('uuid');
 const MongoClient = require("mongodb").MongoClient;
 const PORT = process.env.PORT || 3000;
+const tcpport = process.env.TcpPORT || 8556;
 const app = express();
 
 app.use(bodyParser.json());
@@ -15,7 +17,40 @@ const mongoClient = new MongoClient(process.env.mongo_str);
 
 // создаем парсер для данных application/x-www-form-urlencoded
 const urlencodedParser = express.urlencoded({extended: false});
+/*
+* Tcp Server
+* */
 
+const server = new Net.Server();
+server.listen(port, function() {
+    console.log('Server listening for connection requests on socket localhost:${port}'.);
+});
+
+server.on('connection', function(socket) {
+    console.log('A new connection has been established.');
+
+    // Now that a TCP connection has been established, the server can send data to
+    // the client by writing to its socket.
+    socket.write('Hello, client.');
+
+    // The server can also receive data from the client by reading from its socket.
+    socket.on('data', function(chunk) {
+        console.log('Data received from client: ${chunk.toString()}');
+    });
+
+    // When the client requests to end the TCP connection with the server, the server
+    // ends the connection.
+    socket.on('end', function() {
+        console.log('Closing connection with the client');
+    });
+
+    // Don't forget to catch error, for your own sake.
+    socket.on('error', function(err) {
+        console.log('Error: ${err}');
+    });
+});
+
+/**/
 
 mongoClient.connect(function(err, client){
 
