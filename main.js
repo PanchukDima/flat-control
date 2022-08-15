@@ -22,7 +22,7 @@ const urlencodedParser = express.urlencoded({extended: false});
 * */
 
 const server = new Net.Server();
-server.listen(port, function() {
+server.listen(tcpport, function() {
     console.log('Server listening for connection requests on socket localhost:${port}'.);
 });
 
