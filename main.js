@@ -1,5 +1,4 @@
 const express = require('express');
-const Net = require('net');
 const path = require('path');
 const bodyParser = require('body-parser');
 const request = require('request');
@@ -7,7 +6,6 @@ const http = require('http');
 var uuid = require('uuid');
 const MongoClient = require("mongodb").MongoClient;
 const PORT = process.env.PORT || 3000;
-const tcpport = process.env.TcpPORT || 8556;
 const app = express();
 
 app.use(bodyParser.json());
@@ -17,40 +15,7 @@ const mongoClient = new MongoClient(process.env.mongo_str);
 
 // создаем парсер для данных application/x-www-form-urlencoded
 const urlencodedParser = express.urlencoded({extended: false});
-/*
-* Tcp Server
-* */
 
-const server = new Net.Server();
-server.listen(tcpport, function() {
-    console.log('Server listening for connection requests on socket localhost:${port}');
-});
-
-server.on('connection', function(socket) {
-    console.log('A new connection has been established.');
-
-    // Now that a TCP connection has been established, the server can send data to
-    // the client by writing to its socket.
-    socket.write('Hello, client.');
-
-    // The server can also receive data from the client by reading from its socket.
-    socket.on('data', function(chunk) {
-        console.log('Data received from client: ${chunk.toString()}');
-    });
-
-    // When the client requests to end the TCP connection with the server, the server
-    // ends the connection.
-    socket.on('end', function() {
-        console.log('Closing connection with the client');
-    });
-
-    // Don't forget to catch error, for your own sake.
-    socket.on('error', function(err) {
-        console.log('Error: ${err}');
-    });
-});
-
-/**/
 
 mongoClient.connect(function(err, client){
 
@@ -201,9 +166,18 @@ app.post('/v1.0/user/devices/action', (req, res) => {
     console.log(req);
     res.end('change state devices');
 });
+app.get('/stream', function (req, res, next) {
+    //when using text/plain it did not stream
+    //without charset=utf-8, it only worked in Chrome, not Firefox
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Transfer-Encoding', 'chunked');
 
+    res.write("Thinking...");
+    sendAndSleep(res, 1);
+});
 
 http.createServer(app).listen(PORT, err => {
     if(err) throw err;
     console.log("%c Server running", "color: green");
 });
+
