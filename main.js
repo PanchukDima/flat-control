@@ -166,6 +166,7 @@ app.post('/v1.0/user/devices/action', (req, res) => {
     console.log(req);
     res.end('change state devices');
 });
+
 app.get('/stream', function (req, res, next) {
     //when using text/plain it did not stream
     //without charset=utf-8, it only worked in Chrome, not Firefox
@@ -175,6 +176,18 @@ app.get('/stream', function (req, res, next) {
     res.write("Thinking...");
     sendAndSleep(res, 1);
 });
+
+var sendAndSleep = function (response, counter) {
+    if (counter > 100) {
+        response.end();
+    } else {
+        response.write(" ;i=" + counter);
+        counter++;
+        setTimeout(function () {
+            sendAndSleep(response, counter);
+        }, 1000)
+    };
+};
 
 http.createServer(app).listen(PORT, err => {
     if(err) throw err;
