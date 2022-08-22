@@ -221,7 +221,7 @@ var subscribe = function (response, device_id) {
             }
             console.log(result);
 
-            response.write(result);
+            response.write(JSON.stringify(result));
             setTimeout(function () {
                 subscribe(response, device_id);
             }, 1000);
