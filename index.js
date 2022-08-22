@@ -204,26 +204,29 @@ app.post('/sub', function (req, res, next) {
 });
 
 var subscribe = function (response, device_id) {
-
-    const db = client.db("flat-control-dev");
-    const Client = db.collection("Clients");
-
-    Client.find({oauth:{key:"01724a4b-8f25-44f1-ae8b-e80de259e974"},"devices.id":ObjectId(device_id)}, {
-        projection:
-            {"devices.ports":1}
-    }).toArray(function (err, result) {
+    mongoClient.connect(function(err, client) {
         if (err) {
-            throw err
+            return console.log(err);
         }
-        console.log(result);
+        const db = client.db("flat-control-dev");
+        const Client = db.collection("Clients");
 
-        response.write(result);
-        setTimeout(function () {
-            subscribe(response, device_id);
-        }, 1000);
+        Client.find({oauth: {key: "01724a4b-8f25-44f1-ae8b-e80de259e974"}, "devices.id": ObjectId(device_id)}, {
+            projection:
+                {"devices.ports": 1}
+        }).toArray(function (err, result) {
+            if (err) {
+                throw err
+            }
+            console.log(result);
 
+            response.write(result);
+            setTimeout(function () {
+                subscribe(response, device_id);
+            }, 1000);
+
+        });
     });
-
 
 };
 
