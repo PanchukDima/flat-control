@@ -208,10 +208,11 @@ var subscribe = function (response, device_id) {
         if (err) {
             return console.log(err);
         }
+        var mongo = require('mongodb');
         const db = client.db("flat-control-dev");
         const Client = db.collection("Clients");
 
-        Client.find({oauth: {key: "01724a4b-8f25-44f1-ae8b-e80de259e974"}, "devices.id": new mongoClient.ObjectID(device_id)}, {
+        Client.find({oauth: {key: "01724a4b-8f25-44f1-ae8b-e80de259e974"}, "devices.id": new mongo.ObjectId(device_id)}, {
             projection:
                 {"devices.ports": 1}
         }).toArray(function (err, result) {
