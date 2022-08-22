@@ -144,7 +144,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.find({oauth:{key:TokenArray[1]}}, {
             projection:
-                {username:1 , _id:0, devices:1}
+                {"devices.ports":0, "password":0, "_id":0, "oauth":0}
         }).toArray(function (err, result) {
             if (err) {
                 throw err
@@ -192,6 +192,42 @@ var sendAndSleep = function (response, counter) {
         }, 1000)
     };
 };
+
+app.post('/sub', function (req, res, next) {
+    //when using text/plain it did not stream
+    //without charset=utf-8, it only worked in Chrome, not Firefox
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('Transfer-Encoding', 'chunked');
+
+    res.write("Thinking...");
+    subscribe(res, req.body._id);
+});
+
+var subscribe = function (response, device_id) {
+
+    const db = client.db("flat-control-dev");
+    const Client = db.collection("Clients");
+
+    Client.find({oauth:{key:"01724a4b-8f25-44f1-ae8b-e80de259e974"}}, {
+        projection:
+            {"devices.ports":1}
+    }).toArray(function (err, result) {
+        if (err) {
+            throw err
+        }
+        console.log(result);
+
+        response.write(result);
+        setTimeout(function () {
+            subscribe(response, device_id);
+        }, 1000);
+
+    });
+
+
+};
+
+
 
 http.createServer(app).listen(PORT, err => {
     if(err) throw err;
