@@ -198,7 +198,7 @@ app.post('/sub', function (req, res, next) {
     //without charset=utf-8, it only worked in Chrome, not Firefox
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Transfer-Encoding', 'chunked');
-
+    console.log(req.body);
     res.write("Thinking...");
     subscribe(res, req.body.id);
 });
