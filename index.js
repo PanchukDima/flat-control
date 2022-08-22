@@ -211,7 +211,7 @@ var subscribe = function (response, device_id) {
         const db = client.db("flat-control-dev");
         const Client = db.collection("Clients");
 
-        Client.find({oauth: {key: "01724a4b-8f25-44f1-ae8b-e80de259e974"}, "devices.id": ObjectId(device_id)}, {
+        Client.find({oauth: {key: "01724a4b-8f25-44f1-ae8b-e80de259e974"}, "devices.id": new ObjectID(device_id)}, {
             projection:
                 {"devices.ports": 1}
         }).toArray(function (err, result) {
