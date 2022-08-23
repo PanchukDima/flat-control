@@ -25,7 +25,7 @@ const urlencodedParser = express.urlencoded({extended: false});
 
 const server = net.createServer();
 server.listen(net_port, net_host, () => {
-    console.log('TCP Server is running on port ' + port +'.');
+    console.log('TCP Server is running on port ' + net_port +'.');
 });
 
 server.on('connection', function(sock) {
