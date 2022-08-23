@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const http = require('http');
 var uuid = require('uuid');
+
+const net = require('net');
+const net_port = 7070;
+const net_host = '0.0.0.0';
+
+
 const MongoClient = require("mongodb").MongoClient;
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -16,6 +22,11 @@ const mongoClient = new MongoClient(process.env.mongo_str);
 // создаем парсер для данных application/x-www-form-urlencoded
 const urlencodedParser = express.urlencoded({extended: false});
 
+
+const server = net.createServer();
+server.listen(net_port, net_host, () => {
+    console.log('TCP Server is running on port ' + port +'.');
+});
 
 mongoClient.connect(function(err, client){
 
