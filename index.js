@@ -158,7 +158,6 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         });
 
     });
-
 });
 
 app.post('/v1.0/user/devices/query', (req, res) => {
