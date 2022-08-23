@@ -13,7 +13,7 @@ jobs:
   build:
 
     runs-on: Linux
-
+    environment: vmland_server
     strategy:
       matrix:
         node-version: [16.x]
