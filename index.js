@@ -75,7 +75,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
 
 app.post('/api/auth/', (req, res) =>{
     console.log(req);
-    res.end("HHH");
+    res.end("HHH1");
 });
 
 app.post('/api/registry',  (req, res) =>{
@@ -230,8 +230,6 @@ var subscribe = function (response, device_id) {
     });
 
 };
-
-
 
 http.createServer(app).listen(PORT, err => {
     if(err) throw err;
