@@ -58,7 +58,7 @@ mongoClient.connect(function(err, client){
 
 });
 
-app.get('/', (req, res) =>{
+app.get('/api/', (req, res) =>{
     res.end('Hello');
 });
 
