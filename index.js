@@ -193,66 +193,6 @@ app.post('/v1.0/user/devices/action', (req, res) => {
     res.end('change state devices');
 });
 
-app.get('/stream', function (req, res, next) {
-    //when using text/plain it did not stream
-    //without charset=utf-8, it only worked in Chrome, not Firefox
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.setHeader('Transfer-Encoding', 'chunked');
-
-    res.write("Thinking...");
-    sendAndSleep(res, 1);
-});
-
-var sendAndSleep = function (response, counter) {
-    if (counter > 100) {
-        response.end();
-    } else {
-        response.write(" ;i=" + counter);
-        counter++;
-        setTimeout(function () {
-            sendAndSleep(response, counter);
-        }, 1000)
-    };
-};
-
-app.post('/sub', function (req, res, next) {
-    //when using text/plain it did not stream
-    //without charset=utf-8, it only worked in Chrome, not Firefox
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.setHeader('Transfer-Encoding', 'chunked');
-    console.log(req.body);
-    res.write("Thinking...");
-    subscribe(res, req.body.id);
-});
-
-var subscribe = function (response, device_id) {
-    mongoClient.connect(function(err, client) {
-        if (err) {
-            return console.log(err);
-        }
-        var mongo = require('mongodb');
-        const db = client.db("flat-control-dev");
-        const Client = db.collection("Clients");
-
-        Client.find({oauth: {key: "01724a4b-8f25-44f1-ae8b-e80de259e974"}, "devices.id": new mongo.ObjectId("62f0dbe4d78d0518dcd873fe")}, {
-            projection:
-                {"devices.ports": 1}
-        }).toArray(function (err, result) {
-            if (err) {
-                throw err
-            }
-            console.log(result);
-
-            response.write(JSON.stringify(result));
-            setTimeout(function () {
-                subscribe(response, device_id);
-            }, 1000);
-
-        });
-    });
-
-};
-
 http.createServer(app).listen(PORT, err => {
     if(err) throw err;
     console.log("%c Server running", "color: green");
