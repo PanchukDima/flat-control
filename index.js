@@ -32,7 +32,7 @@ server.on('connection', function(sock) {
     console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
     sockets.push(sock);
     sock.on('data', function(data) {
-        let row = data.split(':');
+        let row = data.toString().split(':');
         console.log('DATA ' + sock.remoteAddress + data);
         if(row[0] == 10)
         {
