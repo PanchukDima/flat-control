@@ -59,7 +59,8 @@ server.on('connection', function(sock) {
                     if (err) {
                         throw err
                     }
-                    console.log(result.devices);
+                    console.log(result[0].devices.length);
+                    console.log(devices)
                     sock.write('99:0');
 
 
