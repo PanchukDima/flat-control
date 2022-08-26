@@ -52,7 +52,7 @@ server.on('connection', function(sock) {
                     "devices.id" : ObjectId(row[1].toString())
                 }
                 console.log(str_find);
-                Client.findOne({"devices.id": row[1].toString()}, function(err, document) {
+                Client.findOne({"devices.id": '63087ff10000000000cd3f14'}, function(err, document) {
                     console.log(document);
                 });
 
