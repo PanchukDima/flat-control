@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const http = require('http');
 var uuid = require('uuid');
+var ObjectId = require('mongodb').ObjectId;
 
 const net = require('net');
 const net_port = 9090;
@@ -37,7 +38,7 @@ server.on('connection', function(sock) {
         console.log('DATA ' + sock.remoteAddress + data);
         if(row[0] == 10)
         {
-            var o_id = new mongo.ObjectId(row[1].toString());
+
             mongoClient.connect(function(err, client) {
 
                 if (err) {
@@ -46,8 +47,9 @@ server.on('connection', function(sock) {
                 // взаимодействие с базой данных
                 const db = client.db("flat-control-dev");
                 const Client = db.collection("Clients");
+                console.log(row[1].toString())
                 let str_find = {
-                    "devices.id" : o_id
+                    "devices.id" : ObjectId(row[1].toString())
                 }
                 console.log(str_find);
                 Client.findOne(str_find, function(result)
