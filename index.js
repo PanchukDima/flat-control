@@ -225,13 +225,13 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
     });
 });
 
-app.post('/v1.0/user/devices/query', (req, res) => {
-    console.log(req);
+app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
+    console.log(req.body);
     res.end('check state devices');
 });
 
-app.post('/v1.0/user/devices/action', (req, res) => {
-    console.log(req);
+app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
+    console.log(req.body);
     res.end('change state devices');
 });
 
