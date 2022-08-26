@@ -59,7 +59,8 @@ server.on('connection', function(sock) {
                     if (err) {
                         throw err
                     }
-                    console.log(result);
+                    console.log(JSON.stringify(result));
+                    sock.send('99:0');
                 });
 
             });
