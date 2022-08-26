@@ -52,10 +52,8 @@ server.on('connection', function(sock) {
                     "devices.id" : ObjectId(row[1].toString())
                 }
                 console.log(str_find);
-                Client.findOne(str_find, function(result)
-                {
-                    console.log(result);
-                    sock.write('99:0');
+                Client.findOne({"devices.id": row[1].toString()}, function(err, document) {
+                    console.log(document);
                 });
 
             });
