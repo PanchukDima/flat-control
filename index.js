@@ -50,9 +50,12 @@ server.on('connection', function(sock) {
                     "devices.id" : o_id
                 }
                 console.log(str_find);
-                let userData = Client.findOne(str_find);
-                console.log(userData);
-                sock.write('99:0');
+                Client.findOne(str_find, function(result)
+                {
+                    console.log(result);
+                    sock.write('99:0');
+                });
+
             });
 
         }
