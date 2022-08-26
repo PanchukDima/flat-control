@@ -104,8 +104,8 @@ app.get('/api/', (req, res) =>{
     res.end('Hello');
 });
 
-app.get('/api/auth/',urlencodedParser, (req, res) => {
-    console.log(req.query);
+app.get('/api/auth/', urlencodedParser, (req, res) => {
+    console.log(req);
     res.redirect(302, '/static/login.html?state='+req.query.state+'&redirect_uri='+req.query.redirect_uri+'&response_type='+req.query.response_type+'&client_id='+req.query.client_id);
 });
 
