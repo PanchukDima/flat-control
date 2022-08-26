@@ -6,7 +6,7 @@ const http = require('http');
 var uuid = require('uuid');
 
 const net = require('net');
-const net_port = 7070;
+const net_port = 9090;
 const net_host = '0.0.0.0';
 let sockets = [];
 
@@ -49,8 +49,9 @@ server.on('connection', function(sock) {
                 let str_find = {
                     "devices.id" : o_id
                 }
+                Console.log(str_find);
                 let userData = Client.findOne(str_find);
-                console.log(JSON.stringify(userData));
+                console.log(userData);
                 sock.write('99:0');
             });
 
