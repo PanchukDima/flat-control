@@ -29,6 +29,7 @@ server.listen(net_port, net_host, () => {
 });
 
 server.on('connection', function(sock) {
+    var mongo = require('mongodb')
     console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
     sockets.push(sock);
     sock.on('data', function(data) {
@@ -36,6 +37,7 @@ server.on('connection', function(sock) {
         console.log('DATA ' + sock.remoteAddress + data);
         if(row[0] == 10)
         {
+            var o_id = new mongo.ObjectId(row[1]);
             mongoClient.connect(function(err, client) {
 
                 if (err) {
@@ -45,7 +47,7 @@ server.on('connection', function(sock) {
                 const db = client.db("flat-control-dev");
                 const Client = db.collection("Clients");
                 let str_find = {
-                    "device.id" : row[1]
+                    "devices.id" : o_id
                 }
                 let userData = Client.findOne(str_find);
                 console.log(JSON.stringify(userData));
