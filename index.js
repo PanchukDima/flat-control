@@ -138,9 +138,33 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
     //res.end("Good bye");
 });
 
-app.post('/api/auth/', (req, res) =>{
-    console.log(req);
-    res.end("HHH1");
+app.post('/api/auth/', urlencodedParser, function (req, res){
+    if(!req.body) {
+        return res.sendStatus(400);
+    }
+    mongoClient.connect(function(err, client) {
+
+        if (err) {
+            return console.log(err);
+        }
+        // взаимодействие с базой данных
+        const db = client.db("flat-control-dev");
+        const Client = db.collection("Clients");
+
+        let userData = Client.findOne(req.body);
+        if(userData.username = req.body.username)
+        {
+            let tmp_key = uuid.v4().toString();
+            Client.findOneAndUpdate(req.body,{$set:{oauth:{lcode:tmp_key}}},function(err, result){
+                console.log("random_key:"+ tmp_key);
+                console.log(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
+                res.redirect(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
+                res.end();
+            });
+
+
+        }
+    });
 });
 
 app.post('/api/registry',  (req, res) =>{
