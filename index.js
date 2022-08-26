@@ -241,29 +241,29 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
         console.log(TokenArray[1]);
         let responseBody = {
             request_id: req.headers['x-request-id'],
-            payload:{
-
-            }
+            payload: {}
         };
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.findOneAndUpdate(
             {
-                oauth:{
-                    key:TokenArray[1]
+                oauth: {
+                    key: TokenArray[1]
                 },
-                "devices.id":ObjectId(req.body.payload.devices[0].id)
+                "devices.id": ObjectId(req.body.payload.devices[0].id)
             },
             {
-                $set:{
+                $set: {
                     "devices.$.port.value": 255
                 }
-            },function(err, result){
-            console.log("Update result"+ result);
-            let sock = sockets.find(devices=>devices.id === req.body.payload.devices[0].id).net_sock;
-            sock.write("20:"+req.body.payload.devices[0].id+"0:255");
-            res.end(JSON.stringify({'access_token':'asdasd'}));
-        });
-    res.end('check state devices');
+            }, function (err, result) {
+                console.log("Update result" + result);
+                let device = sockets.find(devices => devices.id === req.body.payload.devices[0].id);
+                console.log(device)
+                //sock.write("20:"+req.body.payload.devices[0].id+"0:255");
+                res.end(JSON.stringify({'access_token': 'asdasd'}));
+            });
+        res.end('check state devices');
+    });
 });
 
 app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
