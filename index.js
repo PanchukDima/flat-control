@@ -36,7 +36,22 @@ server.on('connection', function(sock) {
         console.log('DATA ' + sock.remoteAddress + data);
         if(row[0] == 10)
         {
-            sock.write('99:0');
+            mongoClient.connect(function(err, client) {
+
+                if (err) {
+                    return console.log(err);
+                }
+                // взаимодействие с базой данных
+                const db = client.db("flat-control-dev");
+                const Client = db.collection("Clients");
+                let str_find = {
+                    "device.id" : row[1]
+                }
+                let userData = Client.findOne(str_find);
+                console.log(JSON.stringify(userData));
+                sock.write('99:0');
+            });
+
         }
 // Write the data back to all the connected, the client will receive it as data from the server
         sockets.forEach(function(sock, index, array) {
