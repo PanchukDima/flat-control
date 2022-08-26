@@ -60,7 +60,7 @@ server.on('connection', function(sock) {
                         throw err
                     }
                     console.log(JSON.stringify(result));
-                    sock.send('99:0');
+                    sock.write('99:0');
                 });
 
             });
