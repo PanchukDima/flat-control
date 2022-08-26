@@ -52,8 +52,14 @@ server.on('connection', function(sock) {
                     "devices.id" : ObjectId(row[1].toString())
                 }
                 console.log(str_find);
-                Client.find({"_id": '63087ff10000000000cd3f13'}, function(err, document) {
-                    console.log(document);
+                Client.find(str_find, {
+                    projection:
+                        {"devices.ports":1, "_id":0}
+                }).toArray(function (err, result) {
+                    if (err) {
+                        throw err
+                    }
+                    console.log(result);
                 });
 
             });
