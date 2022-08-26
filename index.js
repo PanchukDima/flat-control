@@ -37,7 +37,7 @@ server.on('connection', function(sock) {
         console.log('DATA ' + sock.remoteAddress + data);
         if(row[0] == 10)
         {
-            var o_id = new mongo.ObjectId(row[1]);
+            var o_id = new mongo.ObjectId(row[1].toString());
             mongoClient.connect(function(err, client) {
 
                 if (err) {
