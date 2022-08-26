@@ -251,7 +251,7 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
                 oauth:{
                     key:TokenArray[1]
                 },
-                "devices.id":ObjectId(req.body.payload.devices[0].id);
+                "devices.id":ObjectId(req.body.payload.devices[0].id)
             },
             {
                 $set:{
