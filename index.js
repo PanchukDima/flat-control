@@ -105,7 +105,7 @@ app.get('/api/', (req, res) =>{
 });
 
 app.get('/api/auth/', urlencodedParser, (req, res) => {
-    console.log(req);
+    console.log(req.query.request_uri);
     res.redirect(302, '/static/login.html?state='+req.query.state+'&redirect_uri='+req.query.redirect_uri+'&response_type='+req.query.response_type+'&client_id='+req.query.client_id);
 });
 
