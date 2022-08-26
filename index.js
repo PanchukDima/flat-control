@@ -50,7 +50,7 @@ server.on('connection', function(sock) {
                 const Client = db.collection("Clients");
                 console.log(row[1].toString())
                 let str_find = {
-                    "devices.port" : ObjectId(row[1].toString())
+                    "devices.id" : ObjectId(row[1].toString())
                 }
                 console.log(str_find);
                 Client.find(str_find, {
