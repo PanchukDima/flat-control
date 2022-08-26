@@ -9,6 +9,8 @@ var ObjectId = require('mongodb').ObjectId;
 const net = require('net');
 const net_port = 9090;
 const net_host = '0.0.0.0';
+
+
 let sockets = [];
 
 const MongoClient = require("mongodb").MongoClient;
@@ -32,7 +34,6 @@ server.listen(net_port, net_host, () => {
 server.on('connection', function(sock) {
     var mongo = require('mongodb')
     console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
-    sockets.push(sock);
     sock.on('data', function(data) {
         let row = data.toString().split(':');
         console.log('DATA ' + sock.remoteAddress + data);
@@ -60,14 +61,18 @@ server.on('connection', function(sock) {
                         throw err
                     }
                     if (result[0].devices.length> 0) {
+                        var device ={
+                            id:row[1].toString(),
+                            auth:true,
+                            net_sock:sock
+                        };
+                        sockets.push(device);
                         sock.write('99:0');
                     }
                     else
                     {
                         sock.write('99:1');
                     }
-
-
                 });
 
             });
