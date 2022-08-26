@@ -104,7 +104,7 @@ app.get('/api/', (req, res) =>{
     res.end('Hello');
 });
 
-app.get('/api/auth/', (req, res) => {
+app.get('/api/auth/',urlencodedParser, (req, res) => {
     console.log(req.query);
     res.redirect(302, '/static/login.html?state='+req.query.state+'&redirect_uri='+req.query.redirect_uri+'&response_type='+req.query.response_type+'&client_id='+req.query.client_id);
 });
@@ -157,7 +157,8 @@ app.post('/api/auth', urlencodedParser, function (req, res){
         {
             let tmp_key = uuid.v4().toString();
             Client.findOneAndUpdate(req.body,{$set:{oauth:{lcode:tmp_key}}},function(err, result){
-                console.log("random_key:"+ tmp_key);
+                console.log(req.query)
+
                 console.log(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
                 res.redirect(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
                 res.end();
