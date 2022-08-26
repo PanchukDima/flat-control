@@ -226,12 +226,12 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
 });
 
 app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
-    console.log(req.body);
+    console.log(JSON.stringify(req.body));
     res.end('check state devices');
 });
 
 app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
-    console.log(req.body);
+    console.log(JSON.stringify(req.body));
     res.end('change state devices');
 });
 
