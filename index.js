@@ -59,7 +59,8 @@ server.on('connection', function(sock) {
                     if (err) {
                         throw err
                     }
-                    if(result.devices.length > 0)
+
+                    if(JSON.parse(result).devices.length > 0)
                     {
                         sock.write('99:0');
                     }
