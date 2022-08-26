@@ -251,14 +251,16 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
                 oauth:{
                     key:TokenArray[1]
                 },
-                "devices.id":req.body.payload.devices[0].id;
+                "devices.id":ObjectId(req.body.payload.devices[0].id);
             },
             {
                 $set:{
-                    "devices.port.$": 255
+                    "devices.$.port.value": 255
                 }
             },function(err, result){
             console.log("Update result"+ result);
+            let sock = sockets.find(devices=>devices.id === req.body.payload.devices[0].id).net_sock;
+            sock.write("20:"+req.body.payload.devices[0].id+"0:255");
             res.end(JSON.stringify({'access_token':'asdasd'}));
         });
     res.end('check state devices');
