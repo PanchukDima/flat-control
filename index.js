@@ -50,12 +50,12 @@ server.on('connection', function(sock) {
                 const Client = db.collection("Clients");
                 console.log(row[1].toString())
                 let str_find = {
-                    "devices.id" : ObjectId(row[1].toString())
+                    "devices.port" : ObjectId(row[1].toString())
                 }
                 console.log(str_find);
                 Client.find(str_find, {
                     projection:
-                        {"devices.ports":1, "_id":0}
+                        {"devices.port":1, "_id":0}
                 }).toArray(function (err, result) {
                     if (err) {
                         throw err
@@ -209,7 +209,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.find({oauth:{key:TokenArray[1]}}, {
             projection:
-                {"devices.ports":0, "password":0, "_id":0, "oauth":0}
+                {"devices.port":0, "password":0, "_id":0, "oauth":0}
         }).toArray(function (err, result) {
             if (err) {
                 throw err
@@ -222,11 +222,45 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
             res.end(JSON.stringify(responseBody, null, 3));
         });
 
+
     });
 });
 
 app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
     console.log(JSON.stringify(req.body));
+    //{"payload":{"devices":[{"id":"62f0dbe4d78d0518dcd873fe","capabilities":[{"type":"devices.capabilities.on_off","state":{"instance":"on","value":true}}]}]}}
+    mongoClient.connect(function(err, client) {
+        if (err) {
+            return console.log(err);
+        }
+        // взаимодействие с базой данных
+        const db = client.db("flat-control-dev");
+        const Client = db.collection("Clients");
+        let authorization = req.headers.authorization;
+        let TokenArray = authorization.split(" ");
+        console.log(TokenArray[1]);
+        let responseBody = {
+            request_id: req.headers['x-request-id'],
+            payload:{
+
+            }
+        };
+        //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
+        Client.findOneAndUpdate(
+            {
+                oauth:{
+                    key:TokenArray[1]
+                },
+                "devices.id":req.body.payload.devices[0].id;
+            },
+            {
+                $set:{
+                    "devices.port.$": 255
+                }
+            },function(err, result){
+            console.log("Update result"+ result);
+            res.end(JSON.stringify({'access_token':'asdasd'}));
+        });
     res.end('check state devices');
 });
 
