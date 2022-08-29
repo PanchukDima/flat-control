@@ -309,6 +309,42 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
 
 app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
     console.log(JSON.stringify(req.body));
+    //{"payload":{"devices":[{"id":"62f0dbe4d78d0518dcd873fe","capabilities":[{"type":"devices.capabilities.on_off","state":{"instance":"on","value":true}}]}]}}
+    mongoClient.connect(function(err, client) {
+        if (err) {
+            return console.log(err);
+        }
+        // взаимодействие с базой данных
+        const db = client.db("flat-control-dev");
+        const Client = db.collection("Clients");
+        let authorization = req.headers.authorization;
+        let TokenArray = authorization.split(" ");
+        console.log(TokenArray[1]);
+        let responseBody = {
+            request_id: req.headers['x-request-id'],
+            payload: {}
+        };
+        //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
+        Client.findOneAndUpdate(
+            {
+                oauth: {
+                    key: TokenArray[1]
+                },
+                "devices.id": ObjectId(req.body.payload.devices[0].id)
+            },
+            {
+                $set: {
+                    "devices.$.port.value": 255
+                }
+            }, function (err, result) {
+                console.log("Update result" + result);
+                let device = sockets.find(devices => devices.id === req.body.payload.devices[0].id);
+                console.log(device)
+                //sock.write("20:"+req.body.payload.devices[0].id+"0:255");
+                res.end(JSON.stringify({'access_token': 'asdasd'}));
+            });
+        res.end('check state devices');
+    });
     res.end('change state devices');
 });
 
