@@ -152,7 +152,7 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
     console.log(params.get('redirect_uri'));
     //?state=https://social.yandex.ru/broker2/authz_in_web/0f03516f2dbe43428c3b2700e10f7253/callback&redirect_uri=https://social.yandex.net/broker/redirect&response_type=code&client_id=cfe4413eeb8f4a30ba5e7c7b9a777e04
     console.log(req.query['redirect_uri']/*+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey*/);
-    /*mongoClient.connect(function(err, client) {
+    mongoClient.connect(function(err, client) {
 
         if (err) {
             return console.log(err);
@@ -168,14 +168,14 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
             Client.findOneAndUpdate(req.body,{$set:{oauth:{lcode:tmp_key}}},function(err, result){
                 console.log(req.query)
 
-                console.log(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
-                res.redirect(req.query.redirect_uri+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
+                console.log(params.get('redirect_uri')+'?state='+params.get('state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
+                res.redirect(params.get('redirect_uri')+'?state='+params.get('state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
                 res.end();
             });
 
 
         }
-    });*/
+    });
 });
 
 app.post('/api/registry',  (req, res) =>{
