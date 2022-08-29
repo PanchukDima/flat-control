@@ -175,7 +175,7 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
                 console.log(req.query)
 
                 console.log(params.get('redirect_uri')+'?state='+params.get('https://flat-control.ru/static/login.html?state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
-                res.redirect(params.get('redirect_uri')+'?state='+params.get('state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
+                res.redirect(params.get('redirect_uri')+'?state='+params.get('https://flat-control.ru/static/login.html?state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
                 res.end();
             });
 
