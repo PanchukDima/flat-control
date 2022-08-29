@@ -139,11 +139,11 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
     //res.end("Good bye");
 });
 
-app.post('/api/sendtoken/', urlencodedParser, function (req, res){
+app.post('/api/sendtoken/', function (req, res){
     if(!req.body) {
         return res.sendStatus(400);
     }
-
+    console.log(req.query);
     console.log(req.query['redirect_uri']/*+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey*/);
     /*mongoClient.connect(function(err, client) {
 
