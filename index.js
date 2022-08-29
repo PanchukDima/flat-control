@@ -144,7 +144,7 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
         return res.sendStatus(400);
     }
 
-    console.log(req.query['redirect_uri']+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey);
+    console.log(req.query['redirect_uri']/*+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey)*/;
     /*mongoClient.connect(function(err, client) {
 
         if (err) {
