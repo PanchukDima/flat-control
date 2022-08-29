@@ -285,22 +285,14 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
             payload: {}
         };
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
-        Client.findOneAndUpdate(
+        Client.findOne(
             {
                 oauth: {
                     key: TokenArray[1]
                 },
                 "devices.id": ObjectId(req.body.payload.devices[0].id)
-            },
-            {
-                $set: {
-                    "devices.$.port.value": 255
-                }
             }, function (err, result) {
-                console.log("Update result" + result);
-                let device = sockets.find(devices => devices.id === req.body.payload.devices[0].id);
-                console.log(device)
-                //sock.write("20:"+req.body.payload.devices[0].id+"0:255");
+                console.log(result)
                 res.end(JSON.stringify({'access_token': 'asdasd'}));
             });
         res.end('check state devices');
