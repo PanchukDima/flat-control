@@ -139,7 +139,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
     //res.end("Good bye");
 });
 
-app.post('/static/api/auth', urlencodedParser, function (req, res){
+app.post('/api/auth/', urlencodedParser, function (req, res){
     if(!req.body) {
         return res.sendStatus(400);
     }
