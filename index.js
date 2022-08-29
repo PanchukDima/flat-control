@@ -145,8 +145,8 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
     if(!req.body) {
         return res.sendStatus(400);
     }
-    console.log(req.rawHeaders['Referer']);
-    console.log(req.headers);
+
+    console.log(req.headers.referer);
 
     //?state=https://social.yandex.ru/broker2/authz_in_web/0f03516f2dbe43428c3b2700e10f7253/callback&redirect_uri=https://social.yandex.net/broker/redirect&response_type=code&client_id=cfe4413eeb8f4a30ba5e7c7b9a777e04
     console.log(req.query['redirect_uri']/*+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey*/);
