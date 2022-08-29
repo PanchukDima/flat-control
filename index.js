@@ -153,7 +153,7 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
     console.log(req.body);
     var params = new URLSearchParams(req.headers.referer);
     console.log(params);
-    console.log(params.get('state'));
+    console.log(params.get('https://flat-control.ru/static/login.html?state'));
     //?state=https://social.yandex.ru/broker2/authz_in_web/0f03516f2dbe43428c3b2700e10f7253/callback&redirect_uri=https://social.yandex.net/broker/redirect&response_type=code&client_id=cfe4413eeb8f4a30ba5e7c7b9a777e04
     console.log(req.query['redirect_uri']/*+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey*/);
     mongoClient.connect(function(err, client) {
@@ -172,7 +172,7 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
             Client.findOneAndUpdate(req.body,{$set:{oauth:{lcode:tmp_key}}},function(err, result){
                 console.log(req.query)
 
-                console.log(params.get('redirect_uri')+'?state='+params.get('state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
+                console.log(params.get('redirect_uri')+'?state='+params.get('https://flat-control.ru/static/login.html?state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
                 res.redirect(params.get('redirect_uri')+'?state='+params.get('state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
                 res.end();
             });
