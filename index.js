@@ -343,9 +343,8 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 //sock.write("20:"+req.body.payload.devices[0].id+"0:255");
                 res.end(JSON.stringify({'access_token': 'asdasd'}));
             });
-        res.end('check state devices');
+
     });
-    res.end('change state devices');
 });
 
 http.createServer(app).listen(PORT, err => {
