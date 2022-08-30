@@ -172,6 +172,9 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
         {
             let tmp_key = uuid.v4().toString();
             Client.findOneAndUpdate(req.body,{$set:{oauth:{lcode:tmp_key}}},function(err, result){
+                if (err) {
+                    return console.log(err);
+                }
                 console.log(req.query)
 
                 console.log(params.get('redirect_uri')+'?state='+params.get('https://flat-control.ru/static/login.html?state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
@@ -211,6 +214,9 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
 
         let tmp_key = uuid.v4().toString();
         Client.findOneAndUpdate({oauth:{lcode:req.body.code}},{$set:{oauth:{key:tmp_key}}},function(err, result){
+            if (err) {
+                return console.log(err);
+            }
             console.log("random_key:"+ tmp_key);
             res.end(JSON.stringify({'access_token': tmp_key}));
         });
@@ -243,9 +249,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         console.log(TokenArray[1]);
         let responseBody = {
             request_id: req.headers['x-request-id'],
-            payload:{
-
-            }
+            payload:{ }
         };
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.find({oauth:{key:TokenArray[1]}}, {
