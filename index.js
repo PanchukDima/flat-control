@@ -288,7 +288,7 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
             request_id: req.headers['x-request-id'],
             payload: {}
         };
-        console.log('result: get Devices id: '+req.body);
+        console.log('result: get Devices id: '+req.body.devices);
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.findOne(
             {
