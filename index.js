@@ -295,7 +295,13 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
 
 
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
-        Client.find({oauth: {key: TokenArray[1]}, "devices.id": {$in:device_ids} }).toArray(function (err, result) {
+        Client.find({oauth: {key: TokenArray[1]}, "devices.id": {$in:device_ids} }, {
+            projection:{
+                "devices.$":1,
+                "_id":0
+            }
+
+        }).toArray(function (err, result) {
             if (err) {
                 throw err
             }
