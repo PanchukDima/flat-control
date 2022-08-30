@@ -288,6 +288,7 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
             request_id: req.headers['x-request-id'],
             payload: {}
         };
+        console.log('result: get Devices id: '+req.body.payload.devices[0].id);
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.findOne(
             {
@@ -296,6 +297,9 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
                 },
                 "devices.id": ObjectId(req.body.payload.devices[0].id)
             }, function (err, result) {
+                if (err) {
+                    throw err
+                }
                 console.log('result: get Devices id: '+req.body.payload.devices[0].id+' result '+result);
                 res.end(JSON.stringify({'access_token': 'asdasd'}));
             });
