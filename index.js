@@ -301,7 +301,13 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
                     key: TokenArray[1]
                 },
                 "devices.id": {$in:device_ids}
-            }, function (err, result) {
+            },
+            {projection:
+                {
+                    "devices.$":1,
+                    "_id":0
+                }
+                    }, function (err, result) {
                 if (err) {
                     throw err
                 }
