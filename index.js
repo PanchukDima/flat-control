@@ -292,6 +292,7 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
         let device_ids = req.body.devices.map(function (item) {
             return item.id
         });
+
         console.log(device_ids);
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.findOne(
