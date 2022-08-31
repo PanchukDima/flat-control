@@ -314,7 +314,7 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
                 throw err
             }
 
-            responseBody.payload.devices = result;
+            responseBody.payload.devices = result[0].devices;
             console.log(JSON.stringify(responseBody));
             res.end(JSON.stringify(responseBody));
             });
