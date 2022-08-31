@@ -306,7 +306,8 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
                     }
                     },
                 "devices.capabilities":1,
-                "devices.id":1}
+                "devices.id":1
+            }
 
         }).toArray(function (err, result) {
             if (err) {
