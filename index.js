@@ -354,9 +354,11 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 }
             }, function (err, result) {
                 console.log("Update result" + result);
-                let device = sockets.find(devices => devices.id === req.body.payload.devices[0].id);
-                device.net_sock.write("20:"+req.body.payload.devices[0].id+"0:255");
-                res.end(JSON.stringify());
+                responseBody.payload.devices = result;
+                /*let device = sockets.find(devices => devices.id === req.body.payload.devices[0].id);
+                device.net_sock.write("20:"+req.body.payload.devices[0].id+"0:255");*/
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify(responseBody, null, 3));
             });
 
     });
