@@ -319,8 +319,6 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(responseBody, null, 3));
             });
-        res.sendStatus(404);
-
     });
 });
 
