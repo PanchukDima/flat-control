@@ -297,16 +297,24 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.find({oauth: {key: TokenArray[1]}, "devices.id": {$in:device_ids} }, {
             projection:{
-                "devices.$":1,
-                "_id":0
-            }
+                "_id":0,
+                "devices":{
+                    $elemMatch: {
+                        "id": {
+                            $in: device_ids
+                        }
+                    }
+                    },
+                "devices.capabilities":1,
+                "devices.id":1}
 
         }).toArray(function (err, result) {
             if (err) {
                 throw err
             }
                         console.log(JSON.stringify(result));
-                        res.end(JSON.stringify({'access_token': 'asdasd'}));
+                        responseBody.payload.devices = result
+                        res.end(JSON.stringify(responseBody));
             });
         res.end('check state devices');
     });
