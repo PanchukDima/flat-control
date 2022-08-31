@@ -313,9 +313,10 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
             if (err) {
                 throw err
             }
-                        console.log(JSON.stringify(result));
-                        responseBody.payload.devices = result
-                        res.end(JSON.stringify(responseBody));
+
+            responseBody.payload.devices = result;
+            console.log(JSON.stringify(responseBody));
+            res.end(JSON.stringify(responseBody));
             });
         res.end('check state devices');
     });
