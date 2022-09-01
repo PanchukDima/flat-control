@@ -349,7 +349,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
             }, function (err, result) {
                 console.log("Update result" + JSON.stringify(result));
                 responseBody.payload.devices = result.value.action_result = {"status":"DONE"};
-                Client.findOne({
+                Client.find({
                     oauth: {
                         key: TokenArray[1]
                     },
