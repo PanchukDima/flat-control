@@ -355,7 +355,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                     "devices.id": ObjectId(devices[0].id)
                 },
                     {
-                        projection:{"devices":{$elemMatch:{"id":ObjectId(devices[0].id)}}, "devices.capabilities": 1, "_id":0, "devices.id":1}
+                        projection:{"devices":{$elemMatch:{"id":ObjectId(devices[0].id)}}, "devices.capabilities": 0, "_id":0, "devices.id":1}
 
             }).toArray(function (err, result) {
                     if (err) {
