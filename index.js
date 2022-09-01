@@ -272,13 +272,10 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
 });
 
 app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
-    console.log(JSON.stringify(req.body));
-    //{"payload":{"devices":[{"id":"62f0dbe4d78d0518dcd873fe","capabilities":[{"type":"devices.capabilities.on_off","state":{"instance":"on","value":true}}]}]}}
     mongoClient.connect(function(err, client) {
         if (err) {
             return console.log(err);
         }
-        // взаимодействие с базой данных
         const db = client.db("flat-control-dev");
         const Client = db.collection("Clients");
         let authorization = req.headers.authorization;
@@ -292,9 +289,6 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
         let device_ids = req.body.devices.map(function (item) {
             return ObjectId(item.id);
         });
-
-
-        //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.find({oauth: {key: TokenArray[1]}, "devices.id": {$in:device_ids} }, {
             projection:{
                 "_id":0,
@@ -354,12 +348,26 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 }
             }, function (err, result) {
                 console.log("Update result" + JSON.stringify(result));
-                responseBody.payload.devices = result[0].action_result = {"status":"DONE"};
-                /*let device = sockets.find(devices => devices.id === req.body.payload.devices[0].id);
-                device.net_sock.write("20:"+req.body.payload.devices[0].id+"0:255");*/
-                console.log(JSON.stringify(responseBody, null, 3));
-                res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify(responseBody, null, 3));
+                responseBody.payload.devices = result.value.action_result = {"status":"DONE"};
+                Client.findOne({
+                    oauth: {
+                        key: TokenArray[1]
+                    },
+                    "devices.id": ObjectId(devices[0].id)
+                },
+                    {
+                        projection:{"devices":{$elemMatch:{"id":ObjectId(devices[0].id)}}, "devices.capabilities": 1, "_id":0, "devices.id":1}
+
+            }).toArray(function (err, result) {
+                    if (err) {
+                        throw err
+                    }
+                    /*let device = sockets.find(devices => devices.id === req.body.payload.devices[0].id);
+                    device.net_sock.write("20:"+req.body.payload.devices[0].id+"0:255");*/
+                    console.log(JSON.stringify(result, null, 3));
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(responseBody, null, 3));
+                });
             });
 
     });
