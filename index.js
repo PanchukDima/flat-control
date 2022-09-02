@@ -364,7 +364,9 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                     responseBody.payload.devices = result[0].devices;
                     responseBody.payload.devices[0].action_result = {"status":"DONE"};
                     let device = sockets.find(devices => devices.id === req.body.payload.devices[0].id);
-                    device.net_sock.write("20:"+req.body.payload.devices[0].id+"0:255");
+                    if (device) {
+                        device.net_sock.write("20:" + req.body.payload.devices[0].id + "0:255");
+                    }
                     console.log(JSON.stringify(responseBody, null, 3));
                     res.setHeader('Content-Type', 'application/json');
                     res.end(JSON.stringify(responseBody, null, 3));
