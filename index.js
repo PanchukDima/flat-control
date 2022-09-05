@@ -87,7 +87,11 @@ server.on('connection', function(sock) {
     sock.on('end', function() {
         sockets.find(devices => function(devices)
         {
-              delete devices;
+            if (devices.net_sock === sock)
+            {
+                delete devices;
+            }
+             console.log(devices);
         });
 
     });
