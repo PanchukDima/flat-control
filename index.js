@@ -84,6 +84,13 @@ server.on('connection', function(sock) {
         }
 // Write the data back to all the connected, the client will receive it as data from the server
     });
+    sock.on('end', function() {
+        let device = sockets.find(devices => devices.net_sock === sock);
+        if(typeof(device) != 'undefined')
+        {
+            console.log(device.id+'Is disconnect');
+        }
+    });
 });
 
 mongoClient.connect(function(err, client){
