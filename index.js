@@ -86,10 +86,13 @@ server.on('connection', function(sock) {
     });
     sock.on('end', function() {
         let device = sockets.find(devices => devices.net_sock === sock);
+        console.log(sockets);
         if(typeof(device) != 'undefined')
         {
-            console.log(device.id+'Is disconnect');
+            console.log(device.id+' Is disconnect');
+            delete device;
         }
+        console.log(sockets);
     });
 });
 
