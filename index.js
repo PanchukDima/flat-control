@@ -85,15 +85,15 @@ server.on('connection', function(sock) {
 // Write the data back to all the connected, the client will receive it as data from the server
     });
     sock.on('end', function() {
-        sockets.find(devices => function(devices)
+        let device = sockets.find(devices => devices.net_sock === sock);
+        console.log(sockets);
+        if(typeof(device) != 'undefined')
         {
-            if (devices.net_sock === sock)
-            {
-                sockets.splice(sockets.indexOf(devices), 1);
-            }
-             console.log(devices);
-        });
+            console.log(device.id+' Is disconnect');
+            sockets.splice(sockets.indexOf(device), 1);
 
+        }
+        console.log(sockets);
     });
 });
 
