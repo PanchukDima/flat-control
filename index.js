@@ -89,7 +89,7 @@ server.on('connection', function(sock) {
         {
             if (devices.net_sock === sock)
             {
-                delete devices;
+                sockets.splice(sockets.indexOf(devices), 1);
             }
              console.log(devices);
         });
