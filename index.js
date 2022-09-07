@@ -54,12 +54,12 @@ server.on('connection', function(sock) {
                 const Client = db.collection("Clients");
                 console.log(row[1].toString())
                 let str_find = {
-                    "devices.id" : ObjectId(row[1].toString())
+                    "_id" : ObjectId(row[1].toString())
                 }
                 console.log(str_find);
                 Client.find(str_find, {
                     projection:
-                        {"devices.port":1, "_id":0}
+                        {"_id":0}
                 }).toArray(function (err, result) {
                     if (err) {
                         throw err
@@ -68,6 +68,7 @@ server.on('connection', function(sock) {
                         var device ={
                             id:row[1].toString(),
                             auth:true,
+                            devices:row[2].toString().split(','),
                             net_sock:sock
                         };
                         sockets.push(device);
@@ -91,7 +92,6 @@ server.on('connection', function(sock) {
         {
             console.log(device.id+' Is disconnect');
             sockets.splice(sockets.indexOf(device), 1);
-
         }
         console.log(sockets);
     });
