@@ -69,7 +69,12 @@ server.on('connection', function(sock) {
                             id:row[1].toString(),
                             auth:true,
                             devices:row[2].toString().split(','),
-                            net_sock:sock
+                            net_sock:sock,
+                            socket_control:{
+                                live: true,
+                                lasttime: null,
+                                lastkey: null
+                            }
                         };
                         sockets.push(device);
                         sock.write('99:0');
