@@ -382,7 +382,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                         if(device.devices.includes(req.body.payload.devices[0].id)) {
                             if (typeof (device) != 'undefined') {
                                 //device.net_sock.write("20:" + req.body.payload.devices[0].id + ":" + devices[0].capabilities[0].state.value);
-                                device.net_sock.write("20:" + req.body.payload.devices[0].id + ":" + req.body.payload.devices[0].capabilities[0].state.value);
+                                device.net_sock.write("20:" + req.body.payload.devices[0].id + ":" + !req.body.payload.devices[0].capabilities[0].state.value);
                             }
                         }
                         console.log(JSON.stringify(responseBody, null, 3));
