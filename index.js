@@ -247,7 +247,7 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
 app.head('/v1.0/',  (req, res) => {
     console.log('HEAR request');
     //res.sendStatus(200);
-    res.end();
+    res.end("OK");
 });
 
 app.post('/v1.0/user/unlink',  (req, res) => {
