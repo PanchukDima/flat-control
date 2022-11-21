@@ -249,6 +249,11 @@ app.head('/v1.0/',  (req, res) => {
     //res.sendStatus(200);
     res.end("OK");
 });
+app.head('/api/v1.0/',  (req, res) => {
+    console.log('HEAR request');
+    //res.sendStatus(200);
+    res.end("OK");
+});
 
 app.post('/v1.0/user/unlink',  (req, res) => {
     console.log(req);
