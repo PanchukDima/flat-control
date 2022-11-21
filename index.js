@@ -244,7 +244,7 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
 
 app.get('/v1.0/',  (req, res) => {
     console.log(req);
-    res.end('end point');
+    res.end(200);
 });
 
 app.post('/v1.0/user/unlink',  (req, res) => {
