@@ -246,7 +246,7 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
 
 app.head('/v1.0',  (req, res) => {
     console.log(req);
-    res.sendStatus(200);
+    //res.sendStatus(200);
     res.end();
 });
 
