@@ -245,12 +245,32 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
 
 
 app.head('/v1.0/',  (req, res) => {
-    console.log('HEAR request');
+    console.log('HEAR request /v1.0/');
+    //res.sendStatus(200);
+    res.end("OK");
+});
+app.get('/v1.0/',  (req, res) => {
+    console.log('get request /v1.0/');
+    //res.sendStatus(200);
+    res.end("OK");
+});
+app.post('/v1.0/',  (req, res) => {
+    console.log('POST request /v1.0/');
     //res.sendStatus(200);
     res.end("OK");
 });
 app.head('/api/v1.0/',  (req, res) => {
-    console.log('HEAR request');
+    console.log('HEAD request /api/v1.0/');
+    //res.sendStatus(200);
+    res.end("OK");
+});
+app.get('/api/v1.0/',  (req, res) => {
+    console.log('get request /api/v1.0/');
+    //res.sendStatus(200);
+    res.end("OK");
+});
+app.post('/api/v1.0/',  (req, res) => {
+    console.log('post request /api/v1.0/');
     //res.sendStatus(200);
     res.end("OK");
 });
