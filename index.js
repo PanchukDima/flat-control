@@ -242,7 +242,9 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
 
 });
 
-app.head('/v1.0/',  (req, res) => {
+
+
+app.head('/v1.0',  (req, res) => {
     console.log(req);
     res.sendStatus(200);
 });
