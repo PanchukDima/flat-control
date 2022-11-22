@@ -88,6 +88,17 @@ server.on('connection', function(sock) {
             });
 
         }
+        if(row[0] == 30)
+        {
+            //save state devices value
+        }
+        if(row[0] == 50)
+        {
+            if(row[1] == 'PING') {
+                sock.write('50:PONG');
+            }
+        }
+
 // Write the data back to all the connected, the client will receive it as data from the server
     });
     sock.on('end', function() {
