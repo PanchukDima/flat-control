@@ -436,6 +436,14 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
     });
 });
 
+
+//UI Block
+
+app.post('/api/ui_login', (req, res) =>{
+    console.log(req);
+    res.end();
+});
+
 http.createServer(app).listen(PORT, err => {
     if(err) throw err;
     console.log("%c Server running", "color: green");
