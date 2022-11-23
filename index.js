@@ -458,7 +458,7 @@ app.post('/api/ui_login',urlencodedParser, (req, res) =>{
 app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
     console.log(req);
     console.log(req.session.username);
-    res.end();
+    res.end('[0,name,status],[1,name,status]');
 });
 
 http.createServer(app).listen(PORT, err => {
