@@ -439,7 +439,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
 
 //UI Block
 
-app.post('/api/ui_login', (req, res) =>{
+app.post('/api/ui_login',urlencodedParser, (req, res) =>{
     console.log(req);
     res.end();
 });
