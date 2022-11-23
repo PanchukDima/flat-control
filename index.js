@@ -154,6 +154,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         const Client = db.collection("Clients");
         let query = req.query;
         let userData = Client.findOne(req.body);
+        console.log(req.body);
         if(userData.username = req.body.username)
         {
             let tmp_key = uuid.v4().toString();
