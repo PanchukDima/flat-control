@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/flat-control.iml" filepath="$PROJECT_DIR$/.idea/flat-control.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../svgV/.idea/svgV.iml" filepath="$PROJECT_DIR$/../svgV/.idea/svgV.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../flat-control-ui/.idea/flat-control-ui.iml" filepath="$PROJECT_DIR$/../flat-control-ui/.idea/flat-control-ui.iml" />
     </modules>
   </component>
 </project>
