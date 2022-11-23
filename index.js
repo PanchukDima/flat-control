@@ -452,7 +452,7 @@ app.post('/api/ui_login',urlencodedParser, (req, res) =>{
     let responseBody = {
         status : true
     }
-    res.end(res.end(JSON.stringify(responseBody, null, 3));
+    res.end(res.end(JSON.stringify(responseBody, null, 3)));
 });
 
 app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
