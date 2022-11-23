@@ -17,12 +17,19 @@ let sockets = [];
 
 const MongoClient = require("mongodb").MongoClient;
 const PORT = process.env.PORT || 3000;
-const app = express();
+const app = express(),
+    session = require('express-session');
 
 console.log("process.env.clientkey: "+process.env.clientkey);
 
 app.use(bodyParser.json());
 app.use('/static', express.static('public'));
+app.use(
+    session({
+        secret: '59bfa99b-e09f-4c85-bb35-261c39b6efc5',
+        saveUninitialized: true,
+    })
+)
 const mongoClient = new MongoClient(process.env.mongo_str);
 //   const mongoClient = new MongoClient("mongodb://");
 
@@ -441,6 +448,13 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
 
 app.post('/api/ui_login',urlencodedParser, (req, res) =>{
     console.log(req);
+    req.session.username = req.body.username;
+    res.end();
+});
+
+app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
+    console.log(req);
+    console.log(req.session.username);
     res.end();
 });
 
