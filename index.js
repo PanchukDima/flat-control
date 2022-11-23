@@ -449,7 +449,10 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
 app.post('/api/ui_login',urlencodedParser, (req, res) =>{
     console.log(req);
     req.session.username = req.body.username;
-    res.end();
+    let responseBody = {
+        status : true
+    }
+    res.end(res.end(JSON.stringify(responseBody, null, 3)););
 });
 
 app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
