@@ -9,5 +9,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="flat-control-ui" />
+    <orderEntry type="module" module-name="PGStat" />
+    <orderEntry type="module" module-name="argon-dashboard-nodejs" />
   </component>
 </module>

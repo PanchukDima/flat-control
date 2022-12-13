@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../PGStat/.idea/PGStat.iml" filepath="$PROJECT_DIR$/../PGStat/.idea/PGStat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../argon-dashboard-nodejs/.idea/argon-dashboard-nodejs.iml" filepath="$PROJECT_DIR$/../argon-dashboard-nodejs/.idea/argon-dashboard-nodejs.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/flat-control.iml" filepath="$PROJECT_DIR$/.idea/flat-control.iml" />
       <module fileurl="file://$PROJECT_DIR$/../flat-control-ui/.idea/flat-control-ui.iml" filepath="$PROJECT_DIR$/../flat-control-ui/.idea/flat-control-ui.iml" />
     </modules>
