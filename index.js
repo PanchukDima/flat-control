@@ -425,6 +425,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                     if (err) {
                         throw err
                     }
+                    console.log(result)
                     responseBody.payload.devices = result[0].devices;
                     responseBody.payload.devices[0].action_result = {"status":"DONE"};
                     sockets.forEach(device => {
