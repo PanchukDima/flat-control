@@ -395,7 +395,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
             payload: {}
         };
         let devices = req.body.payload.devices;
-
+        console.log("Request devices");
         console.log(devices);
 
         Client.findOneAndUpdate(
