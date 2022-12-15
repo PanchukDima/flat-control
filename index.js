@@ -411,7 +411,8 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 }
             }, function (err, result) {
 
-                Client.find({
+                Client.find(
+                    {
                     oauth: {
                         key: TokenArray[1]
                     },
@@ -430,7 +431,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                         if(device.devices.includes(req.body.payload.devices[0].id)) {
                             if (typeof (device) != 'undefined') {
 
-                                device.net_sock.write("20:" + req.body.payload.devices[0].id + ":" + req.body.payload.devices[0].capabilities[0].state.value+"\r\n");
+                                device.net_sock.write("20:" + req.body.payload.devices[0].id + ":" + req.body.payload.devices[0].capabilities[0].state.value);
                             }
                         }
                         console.log(JSON.stringify(responseBody, null, 3));
