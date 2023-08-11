@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const http = require('http');
 var uuid = require('uuid');
+const util = require('util');
 
 const Pool = require('pg').Pool
 console.log(process.env.database_password);
@@ -292,8 +293,8 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
         request_id: req.headers['x-request-id'],
         payload: {}
     };
-
-        pool.query('SELECT select jsonb_agg(public.device_action(device, \'$2\')) from json_array_elements(($1::json)) device', [devices, TokenArray[1]], (err, dbres) =>
+        let query = util.format('SELECT select jsonb_agg(public.device_action(device, \'$2\')) from json_array_elements(($1::json)) device' ,devices, TokenArray[1])
+        pool.query(query, (err, dbres) =>
             {
                 if (err) {
                     return console.log(err);
@@ -304,71 +305,6 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 res.end(JSON.stringify(responseBody, null, 3));
             }
         );
-
-
-
-    /*mongoClient.connect(function(err, client) {
-        if (err) {
-            return console.log(err);
-        }
-        const db = client.db("flat-control-dev");
-        const Client = db.collection("Clients");
-        let authorization = req.headers.authorization;
-        let TokenArray = authorization.split(" ");
-        console.log(TokenArray[1]);
-        let responseBody = {
-            request_id: req.headers['x-request-id'],
-            payload: {}
-        };
-        let devices = req.body.payload.devices;
-        console.log("Request devices");
-        console.log(devices[0].id);
-
-        Client.findOneAndUpdate(
-            {
-                oauth: {
-                    key: TokenArray[1]
-                },
-                "devices.id": ObjectId(devices[0].id)
-            },
-            {
-                $set: {
-                    "devices.$.capabilities": devices[0].capabilities
-                }
-            }, function (err, result) {
-
-                Client.find(
-                    {
-                    oauth: {
-                        key: TokenArray[1]
-                    },
-                    "devices.id": ObjectId(devices[0].id)
-                },
-                    {
-                        projection:{"devices":{$elemMatch:{"id":ObjectId(devices[0].id)}}, "_id":0, "devices.id":1}
-
-            }).toArray(function (err, result) {
-                    if (err) {
-                        throw err
-                    }
-                    console.log(result)
-                    responseBody.payload.devices = result[0].devices;
-                    responseBody.payload.devices[0].action_result = {"status":"DONE"};
-                    sockets.forEach(device => {
-                        if(device.devices.includes(req.body.payload.devices[0].id)) {
-                            if (typeof (device) != 'undefined') {
-
-                                //device.net_sock.write("20:" + req.body.payload.devices[0].id + ":" + req.body.payload.devices[0].capabilities[0].state.value);
-                            }
-                        }
-                        console.log(JSON.stringify(responseBody, null, 3));
-                        res.setHeader('Content-Type', 'application/json');
-                        res.end(JSON.stringify(responseBody, null, 3));
-                    });
-                });
-            });
-
-    })*/
 });
 
 
