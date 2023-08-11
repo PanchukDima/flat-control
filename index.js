@@ -5,6 +5,7 @@ const request = require('request');
 const http = require('http');
 var uuid = require('uuid');
 const util = require('util');
+var crypto = require('crypto');
 
 const Pool = require('pg').Pool
 console.log(process.env.database_password);
@@ -98,7 +99,16 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
     console.log(req.query['redirect_uri']);
     console.log(req.body.username);
     console.log(req.body.password);
-    mongoClient.connect(function(err, client) {
+    let tmp_key = uuid.v4().toString();
+    let query = util.format("select public.sendtoken('%s', '%s', '%s') as result",req.body.username,req.body.password,tmp_key)
+    pool.query(query, (err, dbres) =>{
+        if(dbres.rows[0].result)
+        {
+            res.redirect(params.get('redirect_uri')+'?state='+params.get('https://flat-control.ru/static/login.html?state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
+            res.end();
+        }
+    });
+    /*mongoClient.connect(function(err, client) {
 
         if (err) {
             return console.log(err);
@@ -107,7 +117,11 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
         const db = client.db("flat-control-dev");
         const Client = db.collection("Clients");
 
+
+
+
         let userData = Client.findOne(req.body);
+
         if(userData.username = req.body.username)
         {
             let tmp_key = uuid.v4().toString();
@@ -124,7 +138,7 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
 
 
         }
-    });
+    });*/
 });
 
 app.post('/api/registry',  (req, res) =>{
