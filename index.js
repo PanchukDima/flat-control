@@ -240,7 +240,32 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
 });
 
 app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
-    mongoClient.connect(function(err, client) {
+    let authorization = req.headers.authorization;
+    let TokenArray = authorization.split(" ");
+    console.log(TokenArray[1]);
+    let responseBody = {
+        request_id: req.headers['x-request-id'],
+        payload: {}
+    };
+    let device_ids = req.body.devices.map(function (item) {
+        return ObjectId(item.id);
+    });
+    let query = util.format('select public.device_query(%s,\'%s\') as devices' ,devices_ids,TokenArray[1])
+    console.log(query);
+    pool.query(query, (err, dbres) =>
+        {
+            if (err) {
+                return console.log(err);
+            }
+            responseBody.payload.devices = dbres.rows[0].devices;
+            console.log(responseBody);
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(responseBody, null, 3));
+        }
+    );
+
+
+    /*mongoClient.connect(function(err, client) {
         if (err) {
             return console.log(err);
         }
@@ -281,7 +306,7 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(responseBody, null, 3));
             });
-    });
+    });*/
 });
 
 app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
