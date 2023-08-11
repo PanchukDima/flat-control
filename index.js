@@ -157,7 +157,18 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
         return res.sendStatus(400);
     }
     console.log("/api/token - request");
-    mongoClient.connect(function(err, client) {
+    let lcode = req.body.code;
+    let tmp_key = uuid.v4().toString();
+    let query = util.format('SELECT public.end_and_update_token(\'%s\',\'%s\') as result', lcode,tmp_key);
+    pool.query(query, (err, dbres) =>{
+        if (dbres.rows[0].result)
+        {
+            res.end(JSON.stringify({'access_token': tmp_key}));
+        }
+    });
+
+
+    /*mongoClient.connect(function(err, client) {
 
         if (err) {
             return console.log(err);
@@ -176,7 +187,7 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
         });
 
 
-    });
+    });*/
 
 });
 
