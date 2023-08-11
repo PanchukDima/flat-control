@@ -96,7 +96,8 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
     console.log(params);
     console.log(params.get('https://flat-control.ru/static/login.html?state'));
     console.log(req.query['redirect_uri']);
-
+    console.log(req.body.username);
+    console.log(req.body.password);
     mongoClient.connect(function(err, client) {
 
         if (err) {
