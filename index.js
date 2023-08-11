@@ -291,8 +291,8 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
         request_id: req.headers['x-request-id'],
         payload: {}
     };
-    pool.on('connect', (client) => {
-        client.query('SELECT select jsonb_agg(public.device_action(device, \'$2\')) from json_array_elements(($1::json)) device', [devices, TokenArray[1]], (err, dbres) =>
+
+        pool.query('SELECT select jsonb_agg(public.device_action(device, \'$2\')) from json_array_elements(($1::json)) device', [devices, TokenArray[1]], (err, dbres) =>
             {
                 if (err) {
                     return console.log(err);
@@ -301,8 +301,8 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
             }
-        )
-    });
+        );
+
 
 
     /*mongoClient.connect(function(err, client) {
