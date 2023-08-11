@@ -294,6 +294,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
         payload: {}
     };
         let query = util.format('SELECT select jsonb_agg(public.device_action(device, \'$2\')) from json_array_elements(($1::json)) device' ,devices, TokenArray[1])
+        console.log(query);
         pool.query(query, (err, dbres) =>
             {
                 if (err) {
