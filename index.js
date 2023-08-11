@@ -5,26 +5,17 @@ const request = require('request');
 const http = require('http');
 var uuid = require('uuid');
 
-import { Pool } from 'pg'
+const pool = require('pg').Pool
 
 const pool = new Pool({
     host: 'localhost',
     user: 'node-express',
+    database: process.env.database,
+    password: process.env.database_password,
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
 });
-
-
-
-const net = require('net');
-const net_port = 9090;
-const net_host = '0.0.0.0';
-
-
-let sockets = [];
-
-
 
 
 const PORT = process.env.PORT || 3000;
