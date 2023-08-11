@@ -297,6 +297,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 if (err) {
                     return console.log(err);
                 }
+                console.log(dbres);
                 responseBody.payload.devices = dbres[0];
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
