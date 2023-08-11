@@ -5,7 +5,7 @@ const request = require('request');
 const http = require('http');
 var uuid = require('uuid');
 
-const pool = require('pg').Pool
+const Pool = require('pg').Pool
 
 const pool = new Pool({
     host: 'localhost',
@@ -202,6 +202,7 @@ app.post('/v1.0/user/unlink',  (req, res) => {
 });
 
 app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
+
     mongoClient.connect(function(err, client) {
         if (err) {
             return console.log(err);
