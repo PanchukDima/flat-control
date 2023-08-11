@@ -6,7 +6,8 @@ const http = require('http');
 var uuid = require('uuid');
 
 const Pool = require('pg').Pool
-
+console.log(process.env.database_password);
+console.log(process.env.database);
 const pool = new Pool({
     host: 'localhost',
     user: 'node-express',
