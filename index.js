@@ -4,7 +4,16 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const http = require('http');
 var uuid = require('uuid');
-var ObjectId = require('mongodb').ObjectId;
+
+import { Pool } from 'pg'
+
+const pool = new Pool({
+    host: 'localhost',
+    user: 'node-express',
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
+});
 
 
 
@@ -15,7 +24,9 @@ const net_host = '0.0.0.0';
 
 let sockets = [];
 
-const MongoClient = require("mongodb").MongoClient;
+
+
+
 const PORT = process.env.PORT || 3000;
 const app = express(),
     session = require('express-session');
@@ -30,113 +41,11 @@ app.use(
         saveUninitialized: true,
     })
 )
-const mongoClient = new MongoClient(process.env.mongo_str);
-//   const mongoClient = new MongoClient("mongodb://");
+
 
 // создаем парсер для данных application/x-www-form-urlencoded
 const urlencodedParser = express.urlencoded({extended: false});
 
-
-const server = net.createServer();
-server.listen(net_port, net_host, () => {
-    console.log('TCP Server is running on port ' + net_port +'.');
-});
-
-server.on('connection', function(sock) {
-    var mongo = require('mongodb')
-    console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
-    sock.on('data', function(data) {
-        let row = data.toString().split(':');
-        console.log('DATA ' + sock.remoteAddress + data);
-        if(row[0] == 10)
-        {
-
-            mongoClient.connect(function(err, client) {
-
-                if (err) {
-                    return console.log(err);
-                }
-                // взаимодействие с базой данных
-                const db = client.db("flat-control-dev");
-                const Client = db.collection("Clients");
-                console.log(row[1].toString())
-                let str_find = {
-                    "_id" : ObjectId(row[1].toString())
-                }
-                console.log(str_find);
-                Client.find(str_find, {
-                    projection:
-                        {"_id":0}
-                }).toArray(function (err, result) {
-                    if (err) {
-                        throw err
-                    }
-                    if (result[0].devices.length> 0) {
-                        var device ={
-                            id:row[1].toString(),
-                            auth:true,
-                            devices:row[2].toString().split(','),
-                            net_sock:sock,
-                            socket_control:{
-                                live: true,
-                                lasttime: null,
-                                lastkey: null
-                            }
-                        };
-                        sockets.push(device);
-                        sock.write('99:0');
-                    }
-                    else
-                    {
-                        sock.write('99:1');
-                    }
-                });
-
-            });
-
-        }
-        if(row[0] == 30)
-        {
-            //save state devices value
-        }
-        if(row[0] == 50)
-        {
-            if(row[1] == 'PING') {
-                sock.write('50:PONG');
-            }
-        }
-
-// Write the data back to all the connected, the client will receive it as data from the server
-    });
-    sock.on('end', function() {
-        let device = sockets.find(devices => devices.net_sock === sock);
-        console.log(sockets);
-        if(typeof(device) != 'undefined')
-        {
-            console.log(device.id+' Is disconnect');
-            sockets.splice(sockets.indexOf(device), 1);
-        }
-        console.log(sockets);
-    });
-});
-
-mongoClient.connect(function(err, client){
-
-    if(err){
-        return console.log(err);
-    }
-    // взаимодействие с базой данных
-    const db = client.db("flat-control-dev");
-    const collection = db.collection("Clients");
-    collection.countDocuments(function(err, result){
-
-        if(err){
-            return console.log(err);
-        }
-    console.log(`Registry users count ${result} `);
-    });
-
-});
 
 app.get('/api/', (req, res) =>{
     res.end('Hello');
@@ -159,8 +68,10 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
         // взаимодействие с базой данных
         const db = client.db("flat-control-dev");
         const Client = db.collection("Clients");
+
         let query = req.query;
         let userData = Client.findOne(req.body);
+
         console.log(req.body);
         if(userData.username = req.body.username)
         {
@@ -191,8 +102,8 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
     var params = new URLSearchParams(req.headers.referer);
     console.log(params);
     console.log(params.get('https://flat-control.ru/static/login.html?state'));
-    //?state=https://social.yandex.ru/broker2/authz_in_web/0f03516f2dbe43428c3b2700e10f7253/callback&redirect_uri=https://social.yandex.net/broker/redirect&response_type=code&client_id=cfe4413eeb8f4a30ba5e7c7b9a777e04
-    console.log(req.query['redirect_uri']/*+'?state='+req.query.state+'&code='+tmp_key+'&client_id='+process.env.clientkey*/);
+    console.log(req.query['redirect_uri']);
+
     mongoClient.connect(function(err, client) {
 
         if (err) {
@@ -432,7 +343,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                         if(device.devices.includes(req.body.payload.devices[0].id)) {
                             if (typeof (device) != 'undefined') {
 
-                                device.net_sock.write("20:" + req.body.payload.devices[0].id + ":" + req.body.payload.devices[0].capabilities[0].state.value);
+                                //device.net_sock.write("20:" + req.body.payload.devices[0].id + ":" + req.body.payload.devices[0].capabilities[0].state.value);
                             }
                         }
                         console.log(JSON.stringify(responseBody, null, 3));
