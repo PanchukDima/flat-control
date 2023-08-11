@@ -284,7 +284,28 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
 
 app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
     console.log(JSON.stringify(req.body));
-    mongoClient.connect(function(err, client) {
+    let devices = req.body.payload.devices;
+    let authorization = req.headers.authorization;
+    let TokenArray = authorization.split(" ");
+    let responseBody = {
+        request_id: req.headers['x-request-id'],
+        payload: {}
+    };
+    pool.on('connect', (client) => {
+        client.query('SELECT select jsonb_agg(public.device_action(device, \'$2\')) from json_array_elements(($1::json)) device', ['brianc', TokenArray[1]], (err, dbres) =>
+            {
+                if (err) {
+                    return console.log(err);
+                }
+                responseBody.payload.devices = dbres[0];
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify(responseBody, null, 3));
+            }
+        )
+    });
+
+
+    /*mongoClient.connect(function(err, client) {
         if (err) {
             return console.log(err);
         }
@@ -345,7 +366,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 });
             });
 
-    });
+    })*/
 });
 
 
