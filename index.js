@@ -250,7 +250,7 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
     let device_ids = req.body.devices.map(function (item) {
         return item.id;
     });
-    let query = util.format('select public.device_query(%s,\'%s\') as devices' ,device_ids,TokenArray[1])
+    let query = util.format('select public.device_query(array%s,\'%s\') as devices' ,device_ids,TokenArray[1])
     console.log(query);
     pool.query(query, (err, dbres) =>
         {
