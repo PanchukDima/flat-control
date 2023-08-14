@@ -161,6 +161,7 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
     let lcode = req.body.code;
     let tmp_key = uuid.v4().toString();
     let query = util.format('SELECT public.end_and_update_token(\'%s\',\'%s\') as result', lcode,tmp_key);
+    console.log(query);
     pool.query(query, (err, dbres) =>{
         if (dbres.rows[0].result)
         {
