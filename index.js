@@ -215,9 +215,13 @@ app.post('/v1.0/user/unlink',  (req, res) => {
     console.log(query);
     pool.query(query , (err, dbres) =>
     {
+        if(err)
+        {
+            console.log(err);
+        }
         if(dbres.rows[0].result)
         {
-            res.setHeader('Content-Type', 'application/json');
+            //res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(responseBody, null, 3));
         }
     })
