@@ -101,6 +101,7 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
     console.log(req.body.password);
     let tmp_key = uuid.v4().toString();
     let query = util.format("select public.sendtoken('%s', '%s', '%s') as result",req.body.username,req.body.password,tmp_key)
+    console.log(query);
     pool.query(query, (err, dbres) =>{
         if(dbres.rows[0].result)
         {
