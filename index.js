@@ -299,7 +299,7 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
                 return console.log(err);
             }
             responseBody.payload.devices = dbres.rows[0].devices;
-            console.log(responseBody);
+            console.log(JSON.stringify(responseBody, null, 3));
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(responseBody, null, 3));
         }
