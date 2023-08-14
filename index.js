@@ -220,7 +220,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
     let query = util.format("select public.devices_list('%s') as devices_client", TokenArray[1]);
 
     pool.query(query, (err, dbres) => {
-        responseBody.payload = dbres.rows[0].devices_client;
+        responseBody.payload = JSON.stringify(dbres.rows[0].devices_client);
         console.log(responseBody);
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(responseBody, null, 3));
