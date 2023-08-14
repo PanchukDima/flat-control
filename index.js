@@ -205,6 +205,22 @@ app.post('/api/v1.0/',  (req, res) => {
 
 app.post('/v1.0/user/unlink',  (req, res) => {
     console.log(req);
+    let authorization = req.headers.authorization;
+    let TokenArray = authorization.split(" ");
+    console.log(TokenArray[1]);
+    let responseBody = {
+        request_id: req.headers['x-request-id']
+    };
+    let query = util.format('SELECT public."unlink"(%s) as result', TokenArray[1])
+    pool.query(query , (err, dbres) =>
+    {
+        if(dbres.rows[0].result)
+        {
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(responseBody, null, 3));
+        }
+    })
+
     res.end('account unlink');
 });
 
