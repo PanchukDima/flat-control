@@ -168,29 +168,6 @@ app.post('/api/token/',urlencodedParser, (req, res) => {
             res.end(JSON.stringify({'access_token': tmp_key}));
         }
     });
-
-
-    /*mongoClient.connect(function(err, client) {
-
-        if (err) {
-            return console.log(err);
-        }
-        // взаимодействие с базой данных
-        const db = client.db("flat-control-dev");
-        const Client = db.collection("Clients");
-
-        let tmp_key = uuid.v4().toString();
-        Client.findOneAndUpdate({oauth:{lcode:req.body.code}},{$set:{oauth:{key:tmp_key}}},function(err, result){
-            if (err) {
-                return console.log(err);
-            }
-            console.log("random_key:"+ tmp_key);
-            res.end(JSON.stringify({'access_token': tmp_key}));
-        });
-
-
-    });*/
-
 });
 
 
@@ -233,7 +210,23 @@ app.post('/v1.0/user/unlink',  (req, res) => {
 
 app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
 
-    mongoClient.connect(function(err, client) {
+    let authorization = req.headers.authorization;
+    let TokenArray = authorization.split(" ");
+    console.log(TokenArray[1]);
+    let responseBody = {
+        request_id: req.headers['x-request-id'],
+        payload:{ }
+    };
+    let query = util.format("select public.devices_list('%s') as devices_client", TokenArray[1]);
+
+    pool.query(query, (err, dbres) => {
+        responseBody.payload = dbres.rows[0].devices_client;
+        console.log(responseBody);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(responseBody, null, 3));
+    });
+
+   /* mongoClient.connect(function(err, client) {
         if (err) {
             return console.log(err);
         }
@@ -243,10 +236,9 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         let authorization = req.headers.authorization;
         let TokenArray = authorization.split(" ");
         console.log(TokenArray[1]);
-        let responseBody = {
-            request_id: req.headers['x-request-id'],
-            payload:{ }
-        };
+
+
+
         //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
         Client.find({oauth:{key:TokenArray[1]}}, {
             projection:
@@ -264,7 +256,7 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         });
 
 
-    });
+    });*/
 });
 
 app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
