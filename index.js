@@ -211,7 +211,8 @@ app.post('/v1.0/user/unlink',  (req, res) => {
     let responseBody = {
         request_id: req.headers['x-request-id']
     };
-    let query = util.format('SELECT public."unlink"(%s) as result', TokenArray[1])
+    let query = util.format("SELECT public.\"unlink\"('%s') as result", TokenArray[1])
+    console.log(query);
     pool.query(query , (err, dbres) =>
     {
         if(dbres.rows[0].result)
