@@ -83,7 +83,7 @@ app.post('/static/login.html', urlencodedParser,function (req, res) {
 
         }
     });
-    //res.end("Good bye");
+
 });
 
 app.post('/api/sendtoken/', urlencodedParser, function (req, res){
@@ -109,37 +109,7 @@ app.post('/api/sendtoken/', urlencodedParser, function (req, res){
             res.end();
         }
     });
-    /*mongoClient.connect(function(err, client) {
 
-        if (err) {
-            return console.log(err);
-        }
-        // взаимодействие с базой данных
-        const db = client.db("flat-control-dev");
-        const Client = db.collection("Clients");
-
-
-
-
-        let userData = Client.findOne(req.body);
-
-        if(userData.username = req.body.username)
-        {
-            let tmp_key = uuid.v4().toString();
-            Client.findOneAndUpdate(req.body,{$set:{oauth:{lcode:tmp_key}}},function(err, result){
-                if (err) {
-                    return console.log(err);
-                }
-                console.log(req.query)
-
-                console.log(params.get('redirect_uri')+'?state='+params.get('https://flat-control.ru/static/login.html?state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
-                res.redirect(params.get('redirect_uri')+'?state='+params.get('https://flat-control.ru/static/login.html?state')+'&code='+tmp_key+'&client_id='+process.env.clientkey);
-                res.end();
-            });
-
-
-        }
-    });*/
 });
 
 app.post('/api/registry',  (req, res) =>{
@@ -246,38 +216,6 @@ app.get('/v1.0/user/devices', urlencodedParser,(req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(responseBody, null, 3));
     });
-
-   /* mongoClient.connect(function(err, client) {
-        if (err) {
-            return console.log(err);
-        }
-        // взаимодействие с базой данных
-        const db = client.db("flat-control-dev");
-        const Client = db.collection("Clients");
-        let authorization = req.headers.authorization;
-        let TokenArray = authorization.split(" ");
-        console.log(TokenArray[1]);
-
-
-
-        //var devices = Client.find({oauth:{key:TokenArray[1]}}).project({gateway:{devices:1}});
-        Client.find({oauth:{key:TokenArray[1]}}, {
-            projection:
-                {"devices.port":0, "password":0, "_id":0, "oauth":0, "devices.capabilities.state":0}
-        }).toArray(function (err, result) {
-            if (err) {
-                throw err
-            }
-            console.log(result);
-            responseBody.payload.user_id = result[0].username;
-            responseBody.payload.devices = result[0].devices;
-            console.log(JSON.stringify(responseBody));
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(responseBody, null, 3));
-        });
-
-
-    });*/
 });
 
 app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
@@ -304,50 +242,6 @@ app.post('/v1.0/user/devices/query', urlencodedParser, (req, res) => {
             res.end(JSON.stringify(responseBody, null, 3));
         }
     );
-
-
-    /*mongoClient.connect(function(err, client) {
-        if (err) {
-            return console.log(err);
-        }
-        const db = client.db("flat-control-dev");
-        const Client = db.collection("Clients");
-        let authorization = req.headers.authorization;
-        let TokenArray = authorization.split(" ");
-        console.log(TokenArray[1]);
-        let responseBody = {
-            request_id: req.headers['x-request-id'],
-            payload: {}
-        };
-        console.log('result: get Devices id: '+req.body.devices);
-        let device_ids = req.body.devices.map(function (item) {
-            return ObjectId(item.id);
-        });
-        Client.find({oauth: {key: TokenArray[1]}, "devices.id": {$in:device_ids} }, {
-            projection:{
-                "_id":0,
-                "devices":{
-                    $elemMatch: {
-                        "id": {
-                            $in: device_ids
-                        }
-                    }
-                    },
-                "devices.capabilities":1,
-                "devices.id":1
-            }
-
-        }).toArray(function (err, result) {
-            if (err) {
-                throw err
-            }
-
-            responseBody.payload.devices = result[0].devices;
-            console.log(JSON.stringify(responseBody));
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(responseBody, null, 3));
-            });
-    });*/
 });
 
 app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
