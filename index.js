@@ -290,7 +290,21 @@ app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
 app.post('/api/flowdata', urlencodedParser, (req, res) =>{
     console.log(req);
     console.log(req.session.username);
-    res.end('[0,name,status],[1,name,status]');
+    let query = 'select public.get_operators(\'asd\') as result'
+    let responseBody;
+    pool.query(query, (err, dbres) =>
+        {
+            if (err) {
+                return console.log(err);
+                return res.sendStatus(500);
+            }
+            console.log(dbres.rows[0]);
+            responseBody = dbres.rows[0].result;
+            console.log(responseBody);
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(dbres.rows[0].result, null, 3));
+        }
+    );
 });
 
 http.createServer(app).listen(PORT, err => {
