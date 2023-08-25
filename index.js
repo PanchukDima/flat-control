@@ -10,6 +10,7 @@ var crypto = require('crypto');
 const Pool = require('pg').Pool
 console.log(process.env.database_password);
 console.log(process.env.database);
+
 const pool = new Pool({
     host: 'localhost',
     user: 'node-express',
@@ -288,7 +289,6 @@ app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
 });
 
 app.post('/api/flowdata', urlencodedParser, (req, res) =>{
-    console.log(req);
     console.log(req.session.username);
     let query = 'select public.get_operators(\'asd\') as result'
     let responseBody;
@@ -298,9 +298,7 @@ app.post('/api/flowdata', urlencodedParser, (req, res) =>{
                 return console.log(err);
                 return res.sendStatus(500);
             }
-            console.log(dbres.rows[0]);
             responseBody = dbres.rows[0].result;
-            console.log(responseBody);
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(dbres.rows[0].result, null, 3));
         }
