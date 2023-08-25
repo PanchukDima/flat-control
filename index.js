@@ -279,9 +279,33 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
 app.post('/api/ui_login',urlencodedParser, (req, res) =>{
     console.log(req.body.name);
     req.session.username = req.body.name;
-    let responseBody = {
-        status : true
-    }
+    let query = util.format('select password from client.credentials WHERE username = %s', req.body.name)
+    let responseBody;
+    pool.query(query, (err, dbres) =>
+        {
+            if (err) {
+                return console.log(err);
+                return res.sendStatus(500);
+            }
+            if(dbres.rows[0].password == req.body.password)
+            {
+                responseBody = {
+                    status : true
+                }
+
+            }
+            else
+            {
+                responseBody = {
+                    status : false
+                }
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify(responseBody, null, 3));
+        }
+    );
+
+
     res.end(res.end(JSON.stringify(responseBody, null, 3)));
 });
 
@@ -293,6 +317,10 @@ app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
 
 app.post('/api/flowdata', urlencodedParser, (req, res) =>{
     console.log(req.session.username);
+    if(req.session.username == undefined)
+    {
+        res.redirect(302, '/static/login.html');
+    }
     let query = 'select public.get_operators(\'asd\') as result'
     let responseBody;
     pool.query(query, (err, dbres) =>
