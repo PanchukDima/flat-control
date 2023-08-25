@@ -287,6 +287,12 @@ app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
     res.end('[0,name,status],[1,name,status]');
 });
 
+app.post('/flowdata', urlencodedParser, (req, res) =>{
+    console.log(req);
+    console.log(req.session.username);
+    res.end('[0,name,status],[1,name,status]');
+});
+
 http.createServer(app).listen(PORT, err => {
     if(err) throw err;
     console.log("%c Server running", "color: green");
