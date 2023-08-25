@@ -277,8 +277,8 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
 //UI Block
 
 app.post('/api/ui_login',urlencodedParser, (req, res) =>{
-
-    req.session.username = req.body.username;
+    console.log(req.body.name);
+    req.session.username = req.body.name;
     let responseBody = {
         status : true
     }
