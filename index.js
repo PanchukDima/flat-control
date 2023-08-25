@@ -28,12 +28,15 @@ const app = express(),
 
 console.log("process.env.clientkey: "+process.env.clientkey);
 
+const oneDay = 1000 * 60 * 60 * 24;
+
 app.use(bodyParser.json());
 app.use('/static', express.static('public'));
 app.use(
     session({
         secret: '59bfa99b-e09f-4c85-bb35-261c39b6efc5',
         saveUninitialized: true,
+        cookie: { maxAge: oneDay },
     })
 )
 
@@ -274,7 +277,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
 //UI Block
 
 app.post('/api/ui_login',urlencodedParser, (req, res) =>{
-    console.log(req);
+
     req.session.username = req.body.username;
     let responseBody = {
         status : true
