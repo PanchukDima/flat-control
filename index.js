@@ -287,7 +287,7 @@ app.post('/api/ui_getdevicelist' ,urlencodedParser, (req, res) =>{
     res.end('[0,name,status],[1,name,status]');
 });
 
-app.post('/flowdata', urlencodedParser, (req, res) =>{
+app.post('/api/flowdata', urlencodedParser, (req, res) =>{
     console.log(req);
     console.log(req.session.username);
     res.end('[0,name,status],[1,name,status]');
