@@ -280,7 +280,9 @@ app.post('/api/ui_login',urlencodedParser, (req, res) =>{
     console.log(req.body.name);
     req.session.username = req.body.name;
     let query = util.format('select password from client.credentials WHERE username = \'%s\'', req.body.name)
-    let responseBody;
+    let responseBody= {
+        status : false
+    };
     pool.query(query, (err, dbres) =>
         {
             if (err) {
@@ -291,14 +293,14 @@ app.post('/api/ui_login',urlencodedParser, (req, res) =>{
             {
                 responseBody = {
                     status : true
-                }
+                };
 
             }
             else
             {
                 responseBody = {
                     status : false
-                }
+                };
             }
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(responseBody, null, 3));
