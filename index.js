@@ -284,8 +284,8 @@ app.post('/api/ui_login',urlencodedParser, (req, res) =>{
     pool.query(query, (err, dbres) =>
         {
             if (err) {
-                return console.log(err);
-                return res.sendStatus(500);
+                console.log(err);
+                return res.sendStatus(404);
             }
             if(dbres.rows[0].password == req.body.password)
             {
