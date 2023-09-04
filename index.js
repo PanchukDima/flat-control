@@ -279,7 +279,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
 app.post('/api/ui_login',urlencodedParser, (req, res) =>{
     console.log(req.body.name);
     req.session.username = req.body.name;
-    let query = util.format('select password from client.credentials WHERE username = %s', req.body.name)
+    let query = util.format('select password from client.credentials WHERE username = \'%s\'', req.body.name)
     let responseBody;
     pool.query(query, (err, dbres) =>
         {
