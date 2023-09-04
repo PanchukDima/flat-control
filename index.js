@@ -289,7 +289,7 @@ app.post('/api/ui_login',urlencodedParser, (req, res) =>{
                 console.log(err);
                 return res.sendStatus(404);
             }
-            if(dbres.rows[0].password == req.body.password)
+            if(dbres.rows[0].password === req.body.password)
             {
                 responseBody = {
                     status : true
