@@ -267,11 +267,20 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 console.log(dbres.rows[0]);
                 responseBody.payload.devices = dbres.rows[0].json_agg;
                 console.log(responseBody);
+                const postData = JSON.stringify(devices);
                 var options = {
-                    host: '127.0.0.1:1880',
-                    path: '/api_action'
+                    host: 'flat-control.ru',
+                    port: 1880,
+                    method: 'POST',
+                    path: '/api_action',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': Buffer.byteLength(postData),
+                    },
                 };
-                http.get(options);
+                const req = http.request(options);
+                req.write(postData);
+                req.end();
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
             }
