@@ -267,6 +267,11 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 console.log(dbres.rows[0]);
                 responseBody.payload.devices = dbres.rows[0].json_agg;
                 console.log(responseBody);
+                var options = {
+                    host: '127.0.0.1:1880',
+                    path: '/api_action'
+                };
+                http.get(options);
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
             }
