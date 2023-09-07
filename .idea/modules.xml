@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/../argon-dashboard-nodejs/.idea/argon-dashboard-nodejs.iml" filepath="$PROJECT_DIR$/../argon-dashboard-nodejs/.idea/argon-dashboard-nodejs.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/flat-control.iml" filepath="$PROJECT_DIR$/.idea/flat-control.iml" />
       <module fileurl="file://$PROJECT_DIR$/../flat-control-ui/.idea/flat-control-ui.iml" filepath="$PROJECT_DIR$/../flat-control-ui/.idea/flat-control-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_mqtt/.idea/node_mqtt.iml" filepath="$PROJECT_DIR$/../node_mqtt/.idea/node_mqtt.iml" />
     </modules>
   </component>
 </project>

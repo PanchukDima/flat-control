@@ -11,5 +11,6 @@
     <orderEntry type="module" module-name="flat-control-ui" />
     <orderEntry type="module" module-name="PGStat" />
     <orderEntry type="module" module-name="argon-dashboard-nodejs" />
+    <orderEntry type="module" module-name="node_mqtt" />
   </component>
 </module>

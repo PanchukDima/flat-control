@@ -13,8 +13,8 @@ const options = {
     port: process.env.port_mqtt,
     protocol: 'mqtts',
     protocolVersion: 5,
-    Username: process.env.username_mqtt,
-    Password: process.env.password_mqtt,
+    username: process.env.username_mqtt,
+    password: process.env.password_mqtt,
 
 };
 const client_mqtt = mqtt.connect(options);
@@ -289,12 +289,14 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 responseBody.payload.devices = dbres.rows[0].json_agg;
                 console.log(responseBody);
                 const postData = JSON.stringify(devices);
-                client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!', { retain: true }, (err) => {
-                    if (err) {
-                        console.error('Failed to publish message:', err);
-                    } else {
-                        console.log('Message published with retain flag set to true');
-                    }
+                client_mqtt.on('connect', () => {
+                    client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!', {retain: true}, (err) => {
+                        if (err) {
+                            console.error('Failed to publish message:', err);
+                        } else {
+                            console.log('Message published with retain flag set to true');
+                        }
+                    });
                 });
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
