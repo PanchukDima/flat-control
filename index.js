@@ -6,6 +6,19 @@ const http = require('http');
 var uuid = require('uuid');
 const util = require('util');
 var crypto = require('crypto');
+const mqtt = require('mqtt');
+
+const options = {
+    host: process.env.host_mqtt,
+    port: process.env.port_mqtt,
+    protocol: 'mqtts',
+    protocolVersion: 5,
+    Username: process.env.username_mqtt,
+    Password: process.env.password_mqtt,
+
+};
+const client_mqtt = mqtt.connect(options);
+client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!');
 
 const Pool = require('pg').Pool
 console.log(process.env.database_password);
