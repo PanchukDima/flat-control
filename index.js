@@ -296,7 +296,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                             console.log('Message published with retain flag set to true');
                         }
                     });
-                    await new Promise(resolve => setTimeout(resolve, 1000));
+
                     client_mqtt.publish(element.topic, element.up, {qos: 2}, (err) => {
                         if (err) {
                             console.error('Failed to publish message:', err);
