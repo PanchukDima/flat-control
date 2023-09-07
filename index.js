@@ -18,7 +18,7 @@ const options = {
 
 };
 const client_mqtt = mqtt.connect(options);
-client.on('connect', () => {
+client_mqtt.on('connect', () => {
     client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!', {retain: true}, (err) => {
         if (err) {
             console.error('Failed to publish message:', err);
