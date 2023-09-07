@@ -281,7 +281,13 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 responseBody.payload.devices = dbres.rows[0].json_agg;
                 console.log(responseBody);
                 const postData = JSON.stringify(devices);
-                client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!');
+                client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!', { retain: true }, (err) => {
+                    if (err) {
+                        console.error('Failed to publish message:', err);
+                    } else {
+                        console.log('Message published with retain flag set to true');
+                    }
+                });
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
             }
