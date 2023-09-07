@@ -17,9 +17,9 @@ const options = {
     password: process.env.password_mqtt,
 
 };
-const client_mqtt = mqtt.connect(options);
+var client_mqtt = mqtt.connect(options);
 client_mqtt.on('connect', () => {
-    client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!', {retain: true}, (err) => {
+    client_mqtt.publish('nodejs/messages', 'Hello, Node JS!', {retain: true}, (err) => {
         if (err) {
             console.error('Failed to publish message:', err);
         } else {
@@ -278,7 +278,9 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
         request_id: req.headers['x-request-id'],
         payload: {}
     };
-        let query = util.format('SELECT json_agg(public.device_action(device, \'%s\')) from json_array_elements((\'%s\'::json)) device' , TokenArray[1],JSON.stringify(devices))
+        let query = util.format('SELECT json_agg(public.device_action(device, \'%s\'))' +
+                                        ',device.get_mqtt_command((\'%s\'::json)) mqtt ' +
+            'from json_array_elements((\'%s\'::json)) device' ,TokenArray[1],JSON.stringify(devices),JSON.stringify(devices))
         console.log(query);
         pool.query(query, (err, dbres) =>
             {
@@ -286,12 +288,16 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                     return console.log(err);
                 }
                 responseBody.payload.devices = dbres.rows[0].json_agg;
-                client_mqtt.on('connect', (err) => {
-                    if (err)
-                    {
-                        console.error('Failed to publish message:', err);
-                    }
-                    client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!', {retain: true}, (err) => {
+                dbres.rows[0].mqtt.forEach((element) => {
+                    client_mqtt.publish(element.topic, element.down, {qos: 2}, (err) => {
+                        if (err) {
+                            console.error('Failed to publish message:', err);
+                        } else {
+                            console.log('Message published with retain flag set to true');
+                        }
+                    });
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    client_mqtt.publish(element.topic, element.up, {qos: 2}, (err) => {
                         if (err) {
                             console.error('Failed to publish message:', err);
                         } else {
