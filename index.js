@@ -281,19 +281,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 responseBody.payload.devices = dbres.rows[0].json_agg;
                 console.log(responseBody);
                 const postData = JSON.stringify(devices);
-                var options = {
-                    host: 'flat-control.ru',
-                    port: 1880,
-                    method: 'POST',
-                    path: '/api_action',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Content-Length': Buffer.byteLength(postData),
-                    },
-                };
-                const req = http.request(options);
-                req.write(postData);
-                req.end();
+                client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!');
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
             }
