@@ -285,11 +285,12 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 if (err) {
                     return console.log(err);
                 }
-                console.log(dbres.rows[0]);
                 responseBody.payload.devices = dbres.rows[0].json_agg;
-                console.log(responseBody);
-                const postData = JSON.stringify(devices);
-                client_mqtt.on('connect', () => {
+                client_mqtt.on('connect', (err) => {
+                    if (err)
+                    {
+                        console.error('Failed to publish message:', err);
+                    }
                     client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!', {retain: true}, (err) => {
                         if (err) {
                             console.error('Failed to publish message:', err);
