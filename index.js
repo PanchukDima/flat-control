@@ -18,7 +18,13 @@ const options = {
 
 };
 const client_mqtt = mqtt.connect(options);
-client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!');
+client_mqtt.publish('nodejs/messages/node7', 'Hello, HiveMQ!', { retain: true }, (err) => {
+    if (err) {
+        console.error('Failed to publish message:', err);
+    } else {
+        console.log('Message published with retain flag set to true');
+    }
+});
 
 const Pool = require('pg').Pool
 console.log(process.env.database_password);
