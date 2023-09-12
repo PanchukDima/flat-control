@@ -297,7 +297,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                                 console.log('Message published with retain flag set to true');
                             }
                         });
-                    }, 500 * i, i);
+                    }, process.env.mqtt_interval * i, i);
                 }
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
