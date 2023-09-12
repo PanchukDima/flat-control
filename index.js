@@ -279,8 +279,8 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
         payload: {}
     };
         let query = util.format('SELECT json_agg(public.device_action(device, \'%s\'))' +
-                                        ',device.get_mqtt_command((\'%s\'::json)) mqtt ' +
-            'from json_array_elements((\'%s\'::json)) device' ,TokenArray[1],JSON.stringify(devices),JSON.stringify(devices))
+                                        ',device.get_mqtt_command((\'%s\'::json), \'%s\') mqtt ' +
+            'from json_array_elements((\'%s\'::json)) device' ,TokenArray[1],JSON.stringify(devices),TokenArray[1],JSON.stringify(devices))
         console.log(query);
         pool.query(query, (err, dbres) =>
             {
