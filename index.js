@@ -289,13 +289,16 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                 }
                 responseBody.payload.devices = dbres.rows[0].json_agg;
                 dbres.rows[0].mqtt.forEach((element) => {
-                    client_mqtt.publish(element.topic, element.message, {qos: 2}, (err) => {
+                    client_mqtt.publish(element.topic, element.message, {qos: 0}, (err) => {
                         if (err) {
                             console.error('Failed to publish message:', err);
                         } else {
                             console.log('Message published with retain flag set to true');
                         }
                     });
+                    setTimeout(function() {
+                        console.log('Wait send mqtt');
+                    }, 500);
                 });
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
