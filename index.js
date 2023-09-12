@@ -288,18 +288,18 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                     return console.log(err);
                 }
                 responseBody.payload.devices = dbres.rows[0].json_agg;
-                dbres.rows[0].mqtt.forEach((element) => {
-                    client_mqtt.publish(element.topic, element.message, {qos: 0}, (err) => {
-                        if (err) {
-                            console.error('Failed to publish message:', err);
-                        } else {
-                            console.log('Message published with retain flag set to true');
-                        }
-                    });
-                    setTimeout(function() {
-                        console.log('Wait send mqtt');
-                    }, 500);
-                });
+                for(var i =0; i<=dbres.rows[0].mqtt.length-1;i++) {
+                    setTimeout(function (i) {
+                        client_mqtt.publish(dbres.rows[0].mqtt[i].topic, dbres.rows[0].mqtt[i].message, {qos: 0}, (err) => {
+                            if (err) {
+                                console.error('Failed to publish message:', err);
+                            } else {
+                                console.log('Message published with retain flag set to true');
+                            }
+                        });
+                    }, 500 * i, i);
+                }
+            });
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
             }
