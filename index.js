@@ -299,7 +299,7 @@ app.post('/v1.0/user/devices/action', urlencodedParser, (req, res) => {
                         });
                     }, 500 * i, i);
                 }
-            });
+
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify(responseBody, null, 3));
             }
